@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c44b4aa7-883e-470b-8d9e-732d418644f1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Cilinder.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Cone.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Plane.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Point.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sphere.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Lib/site-packages/easy-install.pth" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Lib/site-packages/setuptools.pth" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Scripts/Activate.ps1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Scripts/activate" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Scripts/activate.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Scripts/deactivate.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Scripts/easy_install-3.7-script.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Scripts/easy_install-3.7.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Scripts/easy_install-3.7.exe.manifest" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Scripts/easy_install-script.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Scripts/easy_install.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Scripts/easy_install.exe.manifest" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Scripts/pip-script.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Scripts/pip.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Scripts/pip.exe.manifest" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Scripts/pip3-script.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Scripts/pip3.7-script.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Scripts/pip3.7.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Scripts/pip3.7.exe.manifest" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Scripts/pip3.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Scripts/pip3.exe.manifest" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Scripts/python.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/Scripts/pythonw.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../venv/pyvenv.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/master.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/master.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Cilinder.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Cone.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../IntersectionsWithRay.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Plane.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../QuadraticOperations.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sphere.py" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1Pvvn8PX4HxDtYK61m0UV3D0UFr" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c44b4aa7-883e-470b-8d9e-732d418644f1" name="Default Changelist" comment="" />
+      <created>1566767548292</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1566767548292</updated>
+    </task>
+    <servers />
+  </component>
+</project>
