@@ -10,6 +10,10 @@ class Ray:
         self.__p0 = p0
         self.__vet_n = vet_n
         self.t = 1
+
+    def eq(self, t):
+        return self.__p0 + t * self.__vet_n
+
     # Método getters
     @property
     def p0(self):
