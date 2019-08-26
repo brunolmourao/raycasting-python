@@ -10,15 +10,16 @@ Atributos:
     v_direcao: Vetor
         Vetor unitário que define a direção do eixo do cilindro
 """
+import numpy as np
 
 
 class Cillinder:
     # Método Construtor
     def __init__(self, centro_base, raio, altura, v_direcao):
-        self.__centro_base = centro_base
+        self.__centro_base = np.array(centro_base)
         self.__raio = raio
         self.__altura = altura
-        self.__v_direcao = v_direcao
+        self.__v_direcao = np.array(v_direcao)
 
     # TODO: implementar equação do clindro
     @staticmethod
@@ -55,3 +56,20 @@ class Cillinder:
     @property
     def v_direcao(self):
         return self.__v_direcao
+
+    # Métodos setter
+    @centro_base.setter
+    def centro_base(self, v):
+        self.centro_base = v
+
+    @v_direcao.setter
+    def v_direcao(self, v):
+        self.__v_direcao = v
+
+    @altura.setter
+    def altura(self, a):
+        self.__altura = a
+
+    @raio.setter
+    def raio(self, r):
+        self.__raio = r

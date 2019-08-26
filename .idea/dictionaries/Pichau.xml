@@ -4,11 +4,15 @@
       <w>altura</w>
       <w>aresta</w>
       <w>centro</w>
+      <w>colidido</w>
       <w>contem</w>
       <w>direcao</w>
       <w>distancia</w>
       <w>escalar</w>
+      <w>linhas</w>
       <w>normalizar</w>
+      <w>painel</w>
+      <w>placa</w>
       <w>ponto</w>
       <w>produto</w>
       <w>raio</w>
