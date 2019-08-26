@@ -31,7 +31,7 @@ class Cone:
 
     # TODO: implementar equação do clindro
     @staticmethod
-    def contem(t):
+    def ponto(t):
         """equação do cone"""
         """t: float.
                 t aplicado na equação gera o ponto 

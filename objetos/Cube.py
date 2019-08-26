@@ -25,3 +25,11 @@ class Cube(object):
         t1 = 0
         t2 = 0
         return t1, t2
+
+    # TODO: implementar equação do cubo
+    @staticmethod
+    def ponto(t):
+        """equação do cubo"""
+        """t: float.
+                t aplicado na equação gera o ponto 
+        """

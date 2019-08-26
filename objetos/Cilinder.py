@@ -23,7 +23,7 @@ class Cillinder:
 
     # TODO: implementar equação do clindro
     @staticmethod
-    def contem(t):
+    def ponto(t):
         """equação do ciclindro"""
         """t: float.
                 t aplicado na equação gera o ponto 

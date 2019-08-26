@@ -15,14 +15,15 @@ class Plane:
         self.__p = ppl
         self.__v_normal = v_normal
 
+    # TODO: implementar equação do plano
     @staticmethod
-    def contem(self, ponto):
-        eq = produto_escalar(ponto - self.__p, self.__v_normal)
-        if eq == 0:
-            return True
-        else:
-            return False
+    def ponto(t):
+        """equação do plano"""
+        """t: float.
+                t aplicado na equação gera o ponto 
+        """
 
+    # TODO: terminar de implementar
     def intersection_with(self, reta):
         """ Verifica inicialmente se a reta e o plano não são parelelos
             (u.n != 0), caso sejam retorna false, caso contrário retorna t"""

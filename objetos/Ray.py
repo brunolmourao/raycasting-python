@@ -15,7 +15,7 @@ class Ray:
         self.__p = p
         self.__v_normal = v_normal
 
-    def contem(self, t):
+    def ponto(self, t):
         return self.__p + t * self.__v_normal
 
     # Método getters

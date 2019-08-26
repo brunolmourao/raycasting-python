@@ -16,13 +16,13 @@ class Sphere:
         self.__centro = centro
         self.__raio = raio
 
+    # TODO: implementar equação da esfera
     @staticmethod
-    def contem(self, ponto):
-        eq = produto_escalar(ponto - self.__centro, ponto - self.__centro)
-        if eq == (self.__raio * self.__raio):
-            return True
-        else:
-            return False
+    def ponto(t):
+        """equação da esfera"""
+        """t: float.
+                t aplicado na equação gera o ponto 
+        """
 
     def intersection_with(self, reta):
         a = produto_escalar(reta.vet_n, reta.vet_n)
