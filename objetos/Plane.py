@@ -15,10 +15,10 @@ class Plane:
         self.__p = ppl
         self.__v_normal = v_normal
 
-    # TODO: implementar equação do plano
     @staticmethod
-    def contem(ponto):
-        if ():
+    def contem(self, ponto):
+        eq = produto_escalar(ponto - self.__p, self.__v_normal)
+        if eq == 0:
             return True
         else:
             return False
