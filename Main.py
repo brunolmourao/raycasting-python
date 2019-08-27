@@ -8,6 +8,8 @@ from objetos.Cube import Cube
 from objetos.Point import Ponto
 from objetos.Ray import Ray
 
+z = 55  # posição da placa perfurada
+
 
 # TODO: escrever as coordenadas dos furos (onde esta x e y)
 def painel(tam, num_linhas):
@@ -19,26 +21,39 @@ def painel(tam, num_linhas):
     """
     p = []
     for i in range(num_linhas):
-        p.append([x, y, 500] * num_linhas)
+        p.append([x, y, posicao] * num_linhas)
     return p
 
 
+"""poi[i]][j] = [-tam/2, tam/2, z]
+
+00 01 02 03 04 ... 0L
+10 11 12 13 14 ... 1L
+20 21 22 23 24 ... 2L
+|  |  |  |  |   \  |
+L0 L1 L2 L3 L4 ... LL
+
+x = tam/2
+IJ = [-x + tam/L*j, x - tam/L*i, z]
+"""
+
+
+
 # Cenário
-# TODO: calcular na mão os parâmetros de entrada dos objetos, de modo a posiciona-los corretamente no cenario
 objetos = []
-cb1 = Cube()
-cb2 = Cube()
-cb3 = Cube()
-cn = Cone()
-cl = Cillinder()
+cb1 = Cube(Ponto(0, 0, 5), 10, Ponto(0, 1, 0))
+cb2 = Cube(Ponto(0, 10, 5), 10, Ponto(0, 1, 0))
+cb3 = Cube(Ponto(0, 20, 5), 10, Ponto(0, 1, 0))
+cn = Cone(Ponto(0, 10, 30), Ponto(0, 1, 0), 20, 5)
+cl = Cillinder(Ponto(0, 0, 30), 2, 10, Ponto(0, 1, 0))
 objetos.append(cb1)
 objetos.append(cb2)
 objetos.append(cb3)
 objetos.append(cn)
 objetos.append(cl)
 
-obs = Ponto(0, 0, z)
-placa = painel(100, 100)
+obs = Ponto(0, 0, 70)
+placa = painel(20, 100)
 
 # Nesse laço o raio fura todos os objetos
 for furo in placa:
