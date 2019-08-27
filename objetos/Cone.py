@@ -13,6 +13,8 @@ Atributos:
         Raio da base do cone.
 """
 import numpy as np
+from auxiliar.CalcWithVectors import produto_escalar
+from auxiliar.CalcWithVectors import diff
 
 
 class Cone:
@@ -25,9 +27,6 @@ class Cone:
         self.__v_direcao = np.array(v_direcao)
         self.__altura = altura
         self.__raio = raio
-        # p_raio = np.array([raio, 0, 0])
-        # geratriz = vertice - p_raio
-        # self.theta = altura/np.linalg.norm(geratriz)
 
     # TODO: implementar equação do clindro
     @staticmethod
@@ -42,9 +41,25 @@ class Cone:
     def intersection_with(self, reta):
         """retona uma lista com os t's dos pontos, se exitirem.
         """
-        t1 = 0
-        t2 = 0
-        return []
+        p_raio = np.array([self.__raio, 0, 0])
+        geratriz = self.__vertice - p_raio
+        theta = self.__altura/np.linalg.norm(geratriz)
+        v = diff(self.__vertice, reta.p)
+
+        a = np.power([produto_escalar(reta.v_normal, self.__v_direcao)], 2) - produto_escalar(reta.v_normal, reta.v_normal) * np.power([np.cos(theta)], 2)
+        b = np.power([produto_escalar(v, reta.v_normal)], 2) * np.power([np.cos(theta)], 2) - produto_escalar(v, self.__v_direcao) * produto_escalar(reta.v_normal, self.__v_direcao)
+        c = np.power([produto_escalar(v, self.__v_direcao)], 2) - produto_escalar(v, v) * np.power([np.cos(theta)], 2)
+
+        discriminant = np.power([b], 2) - a*c
+
+        if discriminant < 0:
+            return False
+        if a == 0:
+            return [(-c/2*b)]
+
+        t1 = (-b + np.sqrt(discriminant))/a
+        t2 = (-b - np.sqrt(discriminant))/a
+        return [t1, t2]
 
     # Método getters
     @property
