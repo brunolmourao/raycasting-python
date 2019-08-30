@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class Ponto:
+class Point:
 
     def __init__(self, x, y, z):
         self.__x = x

@@ -5,7 +5,7 @@ Programa onde o loop principal irá executar
 from objetos.Cilinder import Cillinder
 from objetos.Cone import Cone
 from objetos.Cube import Cube
-from objetos.Point import Ponto
+from objetos.Point import Point
 from objetos.Ray import Ray
 
 z = 55  # posição da placa perfurada
@@ -40,17 +40,19 @@ IJ = [-x + tam/L*j, x - tam/L*i, z]
 
 
 # Cenário
-objetos = []
-cb1 = Cube(Ponto(0, 0, 5), 10, Ponto(0, 1, 0))
-cb2 = Cube(Ponto(0, 10, 5), 10, Ponto(0, 1, 0))
-cb3 = Cube(Ponto(0, 20, 5), 10, Ponto(0, 1, 0))
-cn = Cone(Ponto(0, 10, 30), Ponto(0, 1, 0), 20, 5)
-cl = Cillinder(Ponto(0, 0, 30), 2, 10, Ponto(0, 1, 0))
-objetos.append(cb1)
-objetos.append(cb2)
-objetos.append(cb3)
-objetos.append(cn)
-objetos.append(cl)
+objects = []
+
+cube1 = Cube(Point(0, 0, 5), 10, Point(0, 1, 0))
+cube2 = Cube(Point(0, 10, 5), 10, Point(0, 1, 0))
+cube3 = Cube(Point(0, 20, 5), 10, Point(0, 1, 0))
+cone = Cone(Point(0, 10, 30), Point(0, 1, 0), 20, 5)
+cilinder = Cillinder(Point(0, 0, 30), 2, 10, Point(0, 1, 0))
+
+objects.append(cube1)
+objects.append(cube2)
+objects.append(cube3)
+objects.append(cone)
+objects.append(cilinder)
 
 obs = Ponto(0, 0, 70)
 placa = painel(20, 100)
@@ -58,7 +60,7 @@ placa = painel(20, 100)
 # Nesse laço o raio fura todos os objetos
 for furo in placa:
     raio = Ray(obs, furo)
-    for obj in objetos:
+    for obj in objects:
         t = obj.intersection_with(raio)
         # falta verificar se t é vazio
         print(obj, obj.ponto(t))
