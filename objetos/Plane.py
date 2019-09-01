@@ -7,7 +7,6 @@ Atributos
         Vetor unitário perpendicular ao plano.
 """
 from auxiliar.CalcWithVectors import produto_escalar
-from objetos.Ray import Ray
 
 
 class Plane:
@@ -15,14 +14,6 @@ class Plane:
     def __init__(self, ppl, v_normal):
         self.__p = ppl
         self.__v_normal = v_normal
-
-    @staticmethod
-    def ponto(self, t):
-        result = produto_escalar(Ray.ponto(t) - self.__p, self.__v_normal)
-        if result == 0:
-            return True
-        else:
-            return False
 
     def intersection_with(self, reta):
         """ Verifica inicialmente se a reta e o plano não são parelelos

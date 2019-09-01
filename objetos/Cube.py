@@ -10,26 +10,21 @@
 
 
 class Cube(object):
+    __lista_vertices = []
+    __lista_arestas = []
+    __lista_faces = []
+
+    # TODO: criar construtor. A partir dos dados de entrada,
+    # criar as listas de 8 vertices (id, p_ori, p_dest), 16 arestas(id,v_orig, v_dest),
+    # e 12 faces triangulares (id, vert1, vert2, vert3)
     def __init__(self, centro_base, aresta, v_direcao):
-        self.__v_direcao = v_direcao
-        self.__aresta = aresta
-        self.__centro_base = centro_base
+        pass
 
     # TODO: implementar a equação de interseção com a reta
+    # Pecorrer a lista de faces triangulares e usar o meto
     @staticmethod
     def intersection_with(self, reta):
-        """retona os t's dos pontos, se exitirem,
-        caso nao existam retorna 0.
+        """retona uma lista de t's dos pontos"""
+        t = []
 
-        """
-        t1 = 0
-        t2 = 0
-        return t1, t2
-
-    # TODO: implementar equação do cubo
-    @staticmethod
-    def ponto(t):
-        """equação do cubo"""
-        """t: float.
-                t aplicado na equação gera o ponto 
-        """
+        return t

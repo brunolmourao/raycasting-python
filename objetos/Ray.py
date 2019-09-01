@@ -13,10 +13,12 @@ class Ray:
     # Método Construtor
     def __init__(self, p, v_normal):
         self.__p = p
-        self.__v_normal = v_normal
+        self.__v_direcao = v_normal
 
+    # TODO verificar se essas operações estao adequadas para a estrutura de dados
+    # que vamos usar
     def ponto(self, t):
-        return self.__p + t * self.__v_normal
+        return self.__p + t * self.__v_direcao
 
     # Método getters
     @property
@@ -25,4 +27,4 @@ class Ray:
 
     @property
     def v_normal(self):
-        return self.__v_normal
+        return self.__v_direcao

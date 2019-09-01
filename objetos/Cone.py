@@ -13,32 +13,20 @@ Atributos:
         Raio da base do cone.
 """
 import numpy as np
-from auxiliar.CalcWithVectors import produto_escalar
+
 from auxiliar.CalcWithVectors import diff
-from objetos.Ray import Ray
-from auxiliar.CalcWithVectors import norma
+from auxiliar.CalcWithVectors import produto_escalar
 
 
 class Cone:
     __theta = 0
 
     # TODO: cálculo de theta. Verificar se o que esta comentado esta correto
-    # Método Construtor
     def __init__(self, vertice, v_direcao, altura, raio):
         self.__vertice = np.array(vertice)
         self.__v_direcao = np.array(v_direcao)
         self.__altura = altura
         self.__raio = raio
-
-    @staticmethod
-    def ponto(self, t):
-        dif = self.__vertice - Ray.ponto(t)
-        result1 = produto_escalar(dif, self.__v_direcao)
-        result2 = produto_escalar(norma(dif), np.cos(self.__theta))
-        if result1 == result2 and 0 <= result1 <= self.__altura:
-            return True
-        else:
-            return False
 
     # TODO: implementar a equação de interseção com a reta
     @staticmethod
