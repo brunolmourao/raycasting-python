@@ -5,7 +5,7 @@ Programa onde o loop principal irá executar
 from objetos.Cilinder import Cillinder
 from objetos.Cone import Cone
 from objetos.Cube import Cube
-from objetos.Point import Point
+from estruturaDeDados.Point import Point
 from objetos.Ray import Ray
 
 z = 55  # posição da placa perfurada
