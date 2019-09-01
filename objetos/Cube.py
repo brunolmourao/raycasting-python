@@ -9,6 +9,7 @@
 """
 
 from estruturaDeDados.Point import Point
+from objetos.Ray import Ray
 
 
 class Cube(object):
@@ -16,12 +17,12 @@ class Cube(object):
     __lista_arestas = []
     __lista_faces = []
 
-    # TODO: criar construtor. A partir dos dados de entrada,
-    # criar as listas de 8 vertices (id, p), 16 arestas(id,v_orig, v_dest),
-    # e 12 faces triangulares (id, vert1, vert2, vert3)
+    # Método construtor do cubo , alocando todas as listas necessárias
     def __init__(self, centro_base, aresta, v_direcao):
-        self.calc_verticies(centro_base,aresta)
+        self.calc_verticies(centro_base, aresta)
         self.calc_arestas()
+        self.calc_faces()
+        self.v_direcao = v_direcao
 
     # TODO: implementar a equação de interseção com a reta
     # Pecorrer a lista de faces triangulares e usar o meto
@@ -54,6 +55,7 @@ class Cube(object):
         self.__lista_vertices.append([6, v7])
         self.__lista_vertices.append([7, v8])
 
+    # Calcular Arestas a partir dos vérticies
     def calc_arestas(self):
         lista_v = self.__lista_vertices
         # Arestas da Base
@@ -71,3 +73,22 @@ class Cube(object):
         self.__lista_arestas.append([10, lista_v[4][1], lista_v[7][1]])
         self.__lista_arestas.append([11, lista_v[7][1], lista_v[5][1]])
         self.__lista_arestas.append([12, lista_v[5][1], lista_v[6][1]])
+
+    # Calcular Faces Triangulares a partir dos Veérticies
+    def calc_faces(self):
+        lista_v = self.__lista_vertices
+        # Faces Triangulares da Base
+        self.__lista_faces.append([1, lista_v[0][1], lista_v[1][1], lista_v[3][1]])
+        self.__lista_faces.append([2, lista_v[0][1], lista_v[1][1], lista_v[2][1]])
+        # Faces Triangulares das faces laterais
+        self.__lista_faces.append([3, lista_v[0][1], lista_v[3][1], lista_v[7][1]])
+        self.__lista_faces.append([4, lista_v[0][1], lista_v[4][1], lista_v[7][1]])
+        self.__lista_faces.append([5, lista_v[0][1], lista_v[2][1], lista_v[4][1]])
+        self.__lista_faces.append([6, lista_v[6][1], lista_v[2][1], lista_v[4][1]])
+        self.__lista_faces.append([7, lista_v[1][1], lista_v[2][1], lista_v[5][1]])
+        self.__lista_faces.append([8, lista_v[2][1], lista_v[5][1], lista_v[6][1]])
+        self.__lista_faces.append([9, lista_v[1][1], lista_v[3][1], lista_v[7][1]])
+        self.__lista_faces.append([10, lista_v[1][1], lista_v[4][1], lista_v[7][1]])
+        # Faces Triangulares da Base Superior
+        self.__lista_faces.append([11, lista_v[4][1], lista_v[5][1], lista_v[7][1]])
+        self.__lista_faces.append([12, lista_v[4][1], lista_v[5][1], lista_v[6][1]])
