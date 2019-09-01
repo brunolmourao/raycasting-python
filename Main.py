@@ -54,7 +54,7 @@ objects.append(cube3)
 objects.append(cone)
 objects.append(cilinder)
 
-obs = Ponto(0, 0, 70)
+obs = Point(0, 0, 70)
 placa = painel(20, 100)
 
 # Nesse laço o raio fura todos os objetos
