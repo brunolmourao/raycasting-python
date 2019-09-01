@@ -15,6 +15,8 @@ Atributos:
 import numpy as np
 from auxiliar.CalcWithVectors import produto_escalar
 from auxiliar.CalcWithVectors import diff
+from objetos.Ray import Ray
+from auxiliar.CalcWithVectors import norma
 
 
 class Cone:
@@ -28,13 +30,15 @@ class Cone:
         self.__altura = altura
         self.__raio = raio
 
-    # TODO: implementar equação do clindro
     @staticmethod
-    def ponto(t):
-        """equação do cone"""
-        """t: float.
-                t aplicado na equação gera o ponto 
-        """
+    def ponto(self, t):
+        dif = self.__vertice - Ray.ponto(t)
+        result1 = produto_escalar(dif, self.__v_direcao)
+        result2 = produto_escalar(norma(dif), np.cos(self.__theta))
+        if result1 == result2 and 0 <= result1 <= self.__altura:
+            return True
+        else:
+            return False
 
     # TODO: implementar a equação de interseção com a reta
     @staticmethod

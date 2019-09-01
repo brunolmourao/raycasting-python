@@ -11,6 +11,10 @@ Atributos:
         Vetor unitário que define a direção do eixo do cilindro
 """
 import numpy as np
+from objetos.Ray import Ray
+from auxiliar.CalcWithVectors import produto_escalar
+from auxiliar.CalcWithVectors import norma
+from auxiliar.QuadraticOperations import roots
 
 
 class Cillinder:
@@ -21,24 +25,29 @@ class Cillinder:
         self.__altura = altura
         self.__v_direcao = np.array(v_direcao)
 
-    # TODO: implementar equação do clindro
     @staticmethod
-    def ponto(t):
-        """equação do ciclindro"""
-        """t: float.
-                t aplicado na equação gera o ponto 
-        """
+    def ponto(self, t):
+        rq = produto_escalar(self.__raio, self.__raio)
+        sub = Ray.ponto(t) - self.__centro_base
+        prod_esc_sub = produto_escalar(sub, self.__v_direcao)
+        vet_norm = sub - produto_escalar(prod_esc_sub, self.__v_direcao)
+        result = produto_escalar(norma(vet_norm), norma(vet_norm))
+        if result == rq and 0 <= prod_esc_sub <= self.__altura:
+            return True
+        else:
+            return False
 
-    # TODO: implementar equação de interseção com a reta
     @staticmethod
     def intersection_with(self, reta):
-        """retona os t's dos pontos, se exitirem,
-        caso nao existam retorna 0.
+        w = self.__calc_coefficients__(reta.v_normal)
+        v = self.__calc_coefficients__(reta.p - self.__centro_base)
+        a = produto_escalar(w, w)
+        b = produto_escalar(v, w)
+        c = produto_escalar(v, v) - produto_escalar(self.__raio, self.__raio)
+        return roots(a, b, c)
 
-        """
-        t1 = 0
-        t2 = 0
-        return t1, t2
+    def __calc_coefficients__(self, coe):
+        return coe - produto_escalar(produto_escalar(coe, self.__v_direcao), self.__v_direcao)
 
     # Método getters
     @property

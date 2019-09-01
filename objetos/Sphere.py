@@ -8,6 +8,7 @@ A classe Esfera representa uma esfera onde:
 """
 from auxiliar.CalcWithVectors import produto_escalar
 from auxiliar.QuadraticOperations import roots
+from objetos.Ray import Ray
 
 
 class Sphere:
@@ -16,18 +17,21 @@ class Sphere:
         self.__centro = centro
         self.__raio = raio
 
-    # TODO: implementar equação da esfera
     @staticmethod
-    def ponto(t):
-        """equação da esfera"""
-        """t: float.
-                t aplicado na equação gera o ponto 
-        """
+    def ponto(self, t):
+        pt = Ray.ponto(t)
+        result = produto_escalar(pt - self.__centro, pt - self.__centro)
+        rq = produto_escalar(self.__raio, self.__raio)
+        if result == rq:
+            return True
+        else:
+            return False
 
     def intersection_with(self, reta):
-        a = produto_escalar(reta.vet_n, reta.vet_n)
-        b = produto_escalar(reta.__p - self.__centro, reta.__v_normal)
-        c = produto_escalar(reta.__p - self.__centro, reta.__p - self.__centro) - self.__raio * self.__raio
+        rq = produto_escalar(self.__raio, self.__raio)
+        a = produto_escalar(reta.v_normal, reta.v_normal)
+        b = produto_escalar(reta.p - self.__centro, reta.v_normal)
+        c = produto_escalar(reta.p - self.__centro, reta.p - self.__centro) - rq
         return roots(a, b, c)
 
     # Método getters

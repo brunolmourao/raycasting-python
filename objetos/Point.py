@@ -19,4 +19,4 @@ class Point:
     def auto_normalizar(self):
         n = self.norma()
         if n > 0:
-            return Ponto(self.__x / n, self.__y / n, self.__z / n)
+            return Point(self.__x / n, self.__y / n, self.__z / n)
