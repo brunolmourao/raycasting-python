@@ -1,11 +1,13 @@
 import numpy as np
-from objetos.Point import Point
+from estruturaDeDados.Point import Point
 
 
 class Vector:
-
-    def __init__(self, origem: Point, destino: Point):
-        pass
+    # Gera o vetor com as coordenadas
+    def __init__(self, x, y, z):
+        self.__x = x
+        self.__y = y
+        self.__z = z
 
     def norma(self):
         return np.sqrt(np.power(self.__x, 2) + np.power(self.__y, 2) + np.power(self.__z, 2))
@@ -13,4 +15,4 @@ class Vector:
     def auto_normalizar(self):
         n = self.norma()
         if n > 0:
-            return Point(self.__x / n, self.__y / n, self.__z / n)
+            return Vector(self.__x / n, self.__y / n, self.__z / n)
