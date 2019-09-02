@@ -16,14 +16,15 @@ import numpy as np
 
 from auxiliar.CalcWithVectors import diff
 from auxiliar.CalcWithVectors import produto_escalar
+from estruturaDeDados.Point import Point
 
 
 class Cone:
     __theta = 0
 
     # TODO: cálculo de theta. Verificar se o que esta comentado esta correto
-    def __init__(self, vertice, v_direcao, altura, raio):
-        self.__vertice = np.array(vertice)
+    def __init__(self, centro_base, raio, altura, v_direcao):
+        self.__vertice = Point(centro_base.x, centro_base.y + altura, centro_base.z)
         self.__v_direcao = np.array(v_direcao)
         self.__altura = altura
         self.__raio = raio
