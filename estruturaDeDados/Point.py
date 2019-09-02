@@ -2,11 +2,13 @@ import numpy as np
 
 
 class Point:
-
+    contador = 0
     def __init__(self, x, y, z):
+        self.id = contador +1
         self.__x = x
         self.__y = y
         self.__z = z
+        Point.contador = self.id
 
     def distancia(self, ponto):
         return np.sqrt(np.power(ponto.__x - self.__x, 2)
