@@ -6,6 +6,7 @@ A classe Esfera representa uma esfera onde:
     raio: float
         Raio da esfera.
 """
+import numpy as np
 from auxiliar.CalcWithVectors import produto_escalar
 from auxiliar.QuadraticOperations import roots
 from objetos.Ray import Ray
@@ -14,7 +15,7 @@ from objetos.Ray import Ray
 class Sphere:
     # Método Construtor
     def __init__(self, centro, raio):
-        self.__centro = centro
+        self.__centro = np.array(centro)
         self.__raio = raio
 
     @staticmethod
