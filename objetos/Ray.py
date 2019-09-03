@@ -7,13 +7,14 @@ Atributos:
     __v_normal: Vetor
         Vetor Unitario que determina a direção da reta
 """
+import numpy as np
 
 
 class Ray:
     # Método Construtor
     def __init__(self, p, v_normal):
-        self.__p = p
-        self.__v_direcao = v_normal
+        self.__p = np.array(p)
+        self.__v_direcao = np.array(v_normal)
 
     # TODO verificar se essas operações estao adequadas para a estrutura de dados
     # que vamos usar

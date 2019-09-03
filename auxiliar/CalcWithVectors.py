@@ -7,12 +7,16 @@ from estruturaDeDados import Point
 """
 
 
-def produto_escalar(vetor1: object, vetor2: object):
-    return np.sqrt(np.dot(vetor1, vetor2))
+def produto_escalar(vetor1, vetor2):
+    v1 = np.array(vetor1)
+    v2 = np.array(vetor2)
+    return np.sqrt(np.dot(v1, v2))
 
 
 def produto_vetorial(vetor1, vetor2):
-    return np.cross(vetor1, vetor2)
+    v1 = np.array(vetor1)
+    v2 = np.array(vetor2)
+    return np.cross(v1, v2)
 
 
 def norma(vetor):
@@ -20,11 +24,14 @@ def norma(vetor):
 
 
 def normalizar(vetor):
-    vetor / norma(vetor)
+    v = np.array(vetor)
+    v / norma(vetor)
 
 
 def diff(vetor1, vetor2):
-    return vetor2 - vetor1
+    v1 = np.array(vetor1)
+    v2 = np.array(vetor2)
+    return v2 - v1
 
 
 def vetor_entre_2_pontos(origem: Point, destino: Point):

@@ -6,14 +6,15 @@ Atributos
     v_normal: Vetor
         Vetor unitário perpendicular ao plano.
 """
+import numpy as np
 from auxiliar.CalcWithVectors import produto_escalar
 
 
 class Plane:
     # Método Construtor
     def __init__(self, ppl, v_normal):
-        self.__p = ppl
-        self.__v_normal = v_normal
+        self.__p = np.array(ppl)
+        self.__v_normal = np.array(v_normal)
 
     def intersection_with(self, reta):
         """ Verifica inicialmente se a reta e o plano não são parelelos
