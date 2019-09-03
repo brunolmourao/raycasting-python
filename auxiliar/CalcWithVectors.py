@@ -19,7 +19,6 @@ def norma(vetor):
     return produto_escalar(vetor, vetor)
 
 
-@staticmethod
 def normalizar(vetor):
     vetor / norma(vetor)
 

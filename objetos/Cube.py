@@ -8,9 +8,12 @@
         Um vetor unitario que é a normal a base do cubo
 """
 import numpy as np
-from auxiliar import CalcWithVectors
+from auxiliar.CalcWithVectors import vetor_entre_2_pontos
+from auxiliar.CalcWithVectors import normalizar
+from auxiliar.CalcWithVectors import produto_escalar
 from estruturaDeDados.Point import Point
 from objetos.Ray import Ray
+
 
 class Cube(object):
     __lista_vertices = []
@@ -25,19 +28,19 @@ class Cube(object):
         self.v_direcao = v_direcao
 
     # TODO: implementar a equação de interseção com a reta
-    # Pecorrer a lista de faces triangulares e usar o metodo
+    # Percorrer a lista de faces triangulares e usar o metodo
     @staticmethod
-    def intersection_with(self, reta:Ray):
+    def intersection_with(self, reta: Ray):
         t = []
         for x in self.__lista_faces:
             # Calcula os vetores que formam o plano
-            v1 = CalcWithVectors.vetor_entre_2_pontos(x[1], x[2])
-            v2 = CalcWithVectors.vetor_entre_2_pontos(x[1], x[3])
+            v1 = vetor_entre_2_pontos(x[1], x[2])
+            v2 = vetor_entre_2_pontos(x[1], x[3])
             # Calcular o vetor n do plano
             v3 = np.cross(v1, v2)
-            n = CalcWithVectors.normalizar(v3)
+            n = normalizar(v3)
             # Calculando o t do plano de intersecção
-            tint = CalcWithVectors.produto_escalar(v1 - reta.p, n) / CalcWithVectors.produto_escalar(reta.v_normal, n)
+            tint = produto_escalar(v1 - reta.p, n) / produto_escalar(reta.v_normal, n)
             t.append(tint)
         return t
 
@@ -97,7 +100,7 @@ class Cube(object):
         self.__lista_faces.append([7, lista_v[5][1], lista_v[1][1], lista_v[2][1]])
         self.__lista_faces.append([8, lista_v[6][1], lista_v[5][1], lista_v[3][1]])
         self.__lista_faces.append([9, lista_v[7][1], lista_v[3][1], lista_v[1][1]])
-        self.__lista_faces.append([10, lista_v[4][1], lista_v[8][1], lista_v[1][1]])
+        self.__lista_faces.append([10, lista_v[4][1], lista_v[7][1], lista_v[1][1]])
         # Faces Triangulares da Base Superior
         self.__lista_faces.append([11, lista_v[5][1], lista_v[7][1], lista_v[4][1]])
         self.__lista_faces.append([12, lista_v[6][1], lista_v[5][1], lista_v[4][1]])
