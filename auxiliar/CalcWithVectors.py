@@ -35,4 +35,7 @@ def diff(vetor1, vetor2):
 
 
 def vetor_entre_2_pontos(origem: Point, destino: Point):
-    return np.array(destino.x - origem.x, destino.y - origem.y, destino.z - origem.z)
+    x = destino.x - origem.x
+    y = destino.y - origem.y
+    z = destino.z - origem.z
+    return np.array([x, y, z])

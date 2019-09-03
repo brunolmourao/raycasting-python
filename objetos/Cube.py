@@ -27,7 +27,6 @@ class Cube(object):
         self.calc_faces()
         self.v_direcao = v_direcao
 
-    # TODO: implementar a equação de interseção com a reta
     # Percorrer a lista de faces triangulares e usar o metodo
     @staticmethod
     def intersection_with(self, reta: Ray):
@@ -39,12 +38,16 @@ class Cube(object):
             # Calcular o vetor n do plano
             v3 = np.cross(v1, v2)
             n = normalizar(v3)
+            print(n)
+            p0 = np.array([reta.p.x, reta.p.y, reta.p.z])
             # Calculando o t do plano de intersecção
-            tint = produto_escalar(v1 - reta.p, n) / produto_escalar(reta.v_normal, n)
-            t.append(tint)
+            if produto_escalar(reta.v_normal, n) != 0:
+                tint = produto_escalar(v1 - p0, n) / produto_escalar(reta.v_normal, n)
+                t.append(tint)
         return t
 
-    # Calcular os vértices a partir das entradas e colocar na lista
+        # Calcular os vértices a partir das entradas e colocar na lista
+
     def calc_verticies(self, centro_base, aresta):
         base_top_y = centro_base.y + aresta
         base_top = Point(centro_base.x, base_top_y, centro_base.z)  # ponto central da base superior
