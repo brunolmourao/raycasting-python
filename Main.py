@@ -2,12 +2,13 @@
 Programa onde o loop principal irá executar
 """
 from typing import List
-
+import  auxiliar.CalcWithVectors as calc
 from estruturaDeDados.Point import Point
 from objetos.Cilinder import Cillinder
 from objetos.Cone import Cone
 from objetos.Cube import Cube
 from objetos.Ray import Ray
+import  numpy as np
 
 z = -4  # posição da placa perfurada
 
@@ -50,15 +51,38 @@ objects.append(cube3)
 objects.append(cone)
 objects.append(cilindro)
 
-obs = Point(0, 0, 0)
+obs = np.array([30,4,0])
+look_at = np.array([7,5,0])
+K = obs - look_at
+k = calc.normalizar(K)
+vup = np.array([7,10,0])
+V = vup - obs
+I = calc.produto_vetorial(V,k)
+i = calc.normalizar(I)
+j = calc.produto_vetorial(k,i)
+i = np.append(i,[0])
+j = np.append(j,[0])
+k = np.append(k,[0])
+obs = np.append(obs,[1])
+camera = i
+camera = np.vstack((camera,j))
+camera = np.vstack((camera,k))
+camera = np.vstack((camera,obs))
+camera = np.transpose(camera)
 placa = painel(4, 100, 100)
+
+p1 = calc.transform_camera(camera,Point(7,5,0))
+
+print(p1)
+ 
+""""
 
 # Nesse laço o raio fura todos os objetos
 lista_colisoes = []
 for furo in placa:
     raio = Ray(obs, furo)
     for obj in objects:
-        intersecoes = obj.intersection_with(raio)
+        intersecoes = obj.intersection_with(obj,raio)
         for t in intersecoes:
             lista_colisoes.append([furo, obj, raio.ponto(t), t])
 
@@ -89,7 +113,7 @@ for i in range(len(tela)):
         else:
             print(".")
 
-"""
+
 ........................................................................................................
 ........................................................................................................
 ........................................................................................................
