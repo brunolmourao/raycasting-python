@@ -112,6 +112,7 @@ for l in range(len(placa)):
                 if t < min_t:
                     min_t = t
                     primeiro_obj = obj
+                    print(primeiro_obj)
         # CASO SEJA NECESSARIO MUDAR ALGUM ATRIBUTO DO OBJETO ATINGIDO, USAR O primeir_obj
         tela[l][c][1] = primeiro_obj.cor
         tela[l][c][2] = raio.ponto(min_t)
