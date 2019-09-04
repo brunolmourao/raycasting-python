@@ -15,9 +15,9 @@ from estruturaDeDados.Point import Point
 
 class Ray:
     # Método Construtor
-    def __init__(self, p, v_normal):
+    def __init__(self, p, v_normal:Point):
         self.__p = np.array(p)
-        self.__v_direcao = np.array([v_normal[0].x, v_normal[0].y, v_normal[0].z])
+        self.__v_direcao = np.array([v_normal.x, v_normal.y, v_normal.z])
 
     # TODO verificar se essas operações estao adequadas para a estrutura de dados
     # que vamos usar

@@ -93,6 +93,7 @@ lista_colisoes = []
 for l in range(len(placa)):
     for c in range(len(placa[l])):
         furo = placa[l][c]
+        print(furo)
         raio = Ray(p_obs, furo)
         for obj in objects:
             intersecoes = obj.intersection_with(raio)

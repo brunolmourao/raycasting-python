@@ -116,4 +116,3 @@ class Cube(object):
     @cor.setter
     def cor(self, cor):
         self.__cor = cor
-    
