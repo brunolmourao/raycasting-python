@@ -26,6 +26,7 @@ class Cube(object):
         self.calc_arestas()
         self.calc_faces()
         self.v_direcao = v_direcao
+        self.__cor = ''
 
     # Percorrer a lista de faces triangulares e usar o metodo
     @staticmethod
@@ -107,3 +108,12 @@ class Cube(object):
         # Faces Triangulares da Base Superior
         self.__lista_faces.append([11, lista_v[5][1], lista_v[7][1], lista_v[4][1]])
         self.__lista_faces.append([12, lista_v[6][1], lista_v[5][1], lista_v[4][1]])
+
+    @property
+    def cor(self):
+        return self.__cor
+
+    @cor.setter
+    def cor(self, cor):
+        self.__cor = cor
+    

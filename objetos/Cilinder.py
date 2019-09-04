@@ -24,6 +24,7 @@ class Cillinder:
         self.__raio = raio
         self.__altura = altura
         self.__v_direcao = np.array(v_direcao)
+        self.__cor = '_'
 
     @staticmethod
     def ponto(self, t):
@@ -82,3 +83,11 @@ class Cillinder:
     @raio.setter
     def raio(self, r):
         self.__raio = r
+
+    @property
+    def cor(self):
+        return self.__cor
+
+    @cor.setter
+    def cor(self, cor):
+        self.__cor = cor

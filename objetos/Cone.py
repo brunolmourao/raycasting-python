@@ -29,6 +29,7 @@ class Cone:
         self.__v_direcao = np.array(v_direcao)
         self.__altura = altura
         self.__raio = raio
+        self.__cor = '_'
 
     # TODO: implementar a equação de interseção com a reta
     @staticmethod
@@ -37,11 +38,15 @@ class Cone:
         """
         p_raio = np.array([self.__raio, 0, 0, 0])
         geratriz = self.__vertice - p_raio
-        theta = self.__altura/np.linalg.norm(geratriz)
+        theta = self.__altura / np.linalg.norm(geratriz)
         v = self.__vertice - reta.p
 
-        a = np.power([produto_escalar(reta.v_normal, self.__v_direcao)], 2) - produto_escalar(reta.v_normal, reta.v_normal) * np.power([np.cos(theta)], 2)
-        b = np.power([produto_escalar(v, reta.v_normal)], 2) * np.power([np.cos(theta)], 2) - produto_escalar(v, self.__v_direcao) * produto_escalar(reta.v_normal, self.__v_direcao)
+        a = np.power([produto_escalar(reta.v_normal, self.__v_direcao)], 2) - produto_escalar(reta.v_normal,
+                                                                                              reta.v_normal) * np.power(
+            [np.cos(theta)], 2)
+        b = np.power([produto_escalar(v, reta.v_normal)], 2) * np.power([np.cos(theta)], 2) - produto_escalar(v,
+                                                                                                              self.__v_direcao) * produto_escalar(
+            reta.v_normal, self.__v_direcao)
         c = np.power([produto_escalar(v, self.__v_direcao)], 2) - produto_escalar(v, v) * np.power([np.cos(theta)], 2)
 
         return roots(a, b, c)
@@ -87,3 +92,11 @@ class Cone:
     @raio.setter
     def raio(self, r):
         self.__raio = r
+
+    @property
+    def cor(self):
+        return self.__cor
+
+    @cor.setter
+    def cor(self, cor):
+        self.__cor = cor

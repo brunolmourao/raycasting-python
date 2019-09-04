@@ -17,6 +17,7 @@ class Sphere:
     def __init__(self, centro, raio):
         self.__centro = np.array(centro)
         self.__raio = raio
+        self.__cor = ""
 
     @staticmethod
     def ponto(self, t):
@@ -43,3 +44,11 @@ class Sphere:
     @property
     def raio(self):
         return self.__raio
+
+    @property
+    def cor(self):
+        return self.__cor
+
+    @cor.setter
+    def cor(self, cor):
+        self.__cor = cor
