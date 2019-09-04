@@ -9,10 +9,9 @@
 """
 import numpy as np
 
-from auxiliar.CalcWithVectors import normalizar
-from auxiliar.CalcWithVectors import produto_escalar
-from auxiliar.CalcWithVectors import vetor_entre_2_pontos
+import auxiliar.CalcWithVectors as calc
 from estruturaDeDados.Point import Point
+from objetos.Ray import Ray
 
 
 class Cube(object):
@@ -30,20 +29,25 @@ class Cube(object):
 
     # Percorrer a lista de faces triangulares e usar o metodo
     @staticmethod
-    def intersection_with(self, reta):
+    def intersection_with(self, reta: Ray):
         t = []
         for x in self.__lista_faces:
             # Calcula os vetores que formam o plano
-            v1 = vetor_entre_2_pontos(x[1], x[2])
-            v2 = vetor_entre_2_pontos(x[1], x[3])
+            v1 = calc.vetor_entre_2_pontos(x[1], x[2])
+            v2 = calc.vetor_entre_2_pontos(x[1], x[3])
             # Calcular o vetor n do plano
             v3 = np.cross(v1, v2)
-            n = normalizar(v3)
+            # print(v3)
+            n = calc.normalizar(v3)
             p0 = np.array([reta.p.x, reta.p.y, reta.p.z])
             # Calculando o t do plano de intersecção
-            if produto_escalar(reta.v_normal, n) != 0:
-                tint = produto_escalar(v1 - p0, n) / produto_escalar(reta.v_normal, n)
-                t.append(tint)
+            # Validando coordenadas baricêntricas
+            p = calc.calc_baricentro(x[1], x[2], x[3])
+            val = calc.validar_faces_triangulares(p, x[1], x[2], x[3])
+            if val:
+                if calc.produto_escalar(reta.v_normal, n) != 0:
+                    tint = calc.produto_escalar(v1 - p0, n) / calc.produto_escalar(reta.v_normal, n)
+                    t.append(tint)
         return t
 
         # Calcular os vértices a partir das entradas e colocar na lista
