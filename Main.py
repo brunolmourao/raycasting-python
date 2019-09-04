@@ -60,6 +60,11 @@ def camera_initt(o, lat):
     return cam
 
 
+def search(lista, valor):
+    for i, sublista in enumerate(lista):
+        yield from ((i, j) for j, item in enumerate(sublista) if item == valor)
+
+
 # Coordenadas para camera e placa
 p_obs = [30, 4, 0]
 p_look_at = [7, 5, 0]
@@ -83,51 +88,47 @@ objects.append(cone)
 objects.append(cilindro)
 
 """
-# lista_colisoes: Union[Union[Point, Union[Cube, Cone, Cillinder], Point, float], Any]
+# lista_colisoes: List[List[Union[Union[Point, Union[Cube, Cone, Cillinder], Point, float], Any]]]
+tela: List[List[Point, str, Point]]
 # furo: Point
 # obj: Union[Cube, Cone, Cillinder]
 # t: float
 """
-# Calcula lista de colisões com os objetos
+# Calcula lista de colisões com os objetos, qual o primeiro objeto e o t do ponto atingido
 lista_colisoes = []
+tela = painel_initt(4, 100, 100)
 for l in range(len(placa)):
     for c in range(len(placa[l])):
+        tela[l][c][1] = '.'  # TODO transformar em objeto
         furo = placa[l][c]
         raio = Ray(p_obs, furo)
+        min_t = 999999999999
+        primeiro_obj = None
         for obj in objects:
             intersecoes = obj.intersection_with(raio)
             for t in intersecoes:
                 lista_colisoes.append([furo, obj, raio.ponto(t), t])
+                if t < min_t:
+                    min_t = t
+                    primeiro_obj = obj
+        # CASO SEJA NECESSARIO MUDAR ALGUM ATRIBUTO DO OBJETO ATINGIDO, USAR O primeir_obj
+        tela[l][c][1] = primeiro_obj.cor
+        tela[l][c][2] = raio.ponto(min_t)
 
-""""
-# TODO pintar a tela
-# Neste laço pintamos uma tela
-tela = painel(4, 100, 100)
-for i in range(len(tela)):
-    for j in range(len(tela)):
-        # BUSCA EM LISTA_COLISOES
-        letra = '.'
-        val = []
-        for k in range(1):
-            val.append(tela[i][j], letra)
-        tela.__setitem__(i, val)
+# pintar tela
+for lin in range(len(tela)):
+    for col in range(len(tela[lin])):
+        print(tela[lin][col][1])
 
-    # imprimi
-    if pixel in lista_colisoes:
-        if lista_colisoes[pixel][1] == cube1:
-            print("0")
-        elif lista_colisoes[pixel][1] == cube2:
-            print("X")
-        elif lista_colisoes[pixel][1] == cube3:
-            print("1")
-        elif lista_colisoes[pixel][1] == cone:
-            print("A")
-        elif lista_colisoes[pixel][1] == cilindro:
-            print("T")
-        else:
-            print(".")
-
-
+"""
+[
+    [[0,0,0],'.'],[0,1,0],'.'],[0,2,0],'.'],[0,3,0],'.'],[0,4,0],'.']
+    [[1,0,0],'.'],[1,1,0],'.'],[1,2,0],'.'],[1,3,0],'.'],[1,4,0],'.']
+    [[2,0,0],'.'],[2,1,0],'.'],[2,2,0],'.'],[2,3,0],'.'],[2,4,0],'.']
+    [[3,0,0],'.'],[3,1,0],'.'],[3,2,0],'.'],[3,3,0],'.'],[3,4,0],'.']
+]
+"""
+"""
 ........................................................................................................
 ........................................................................................................
 ........................................................................................................
