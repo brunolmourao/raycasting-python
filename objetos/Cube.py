@@ -8,11 +8,11 @@
         Um vetor unitario que é a normal a base do cubo
 """
 import numpy as np
-from auxiliar.CalcWithVectors import vetor_entre_2_pontos
+
 from auxiliar.CalcWithVectors import normalizar
 from auxiliar.CalcWithVectors import produto_escalar
+from auxiliar.CalcWithVectors import vetor_entre_2_pontos
 from estruturaDeDados.Point import Point
-from objetos.Ray import Ray
 
 
 class Cube(object):
@@ -30,7 +30,7 @@ class Cube(object):
 
     # Percorrer a lista de faces triangulares e usar o metodo
     @staticmethod
-    def intersection_with(self, reta: Ray):
+    def intersection_with(self, reta):
         t = []
         for x in self.__lista_faces:
             # Calcula os vetores que formam o plano
@@ -39,7 +39,6 @@ class Cube(object):
             # Calcular o vetor n do plano
             v3 = np.cross(v1, v2)
             n = normalizar(v3)
-            print(n)
             p0 = np.array([reta.p.x, reta.p.y, reta.p.z])
             # Calculando o t do plano de intersecção
             if produto_escalar(reta.v_normal, n) != 0:

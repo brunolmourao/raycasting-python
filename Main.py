@@ -1,6 +1,8 @@
 """"
 Programa onde o loop principal irá executar
 """
+
+import sys
 from typing import List
 
 import numpy as np
@@ -10,8 +12,10 @@ from estruturaDeDados.Point import Point
 from objetos.Cilinder import Cillinder
 from objetos.Cone import Cone
 from objetos.Cube import Cube
+from objetos.Panel import Panel
 from objetos.Ray import Ray
 
+sys.setrecursionlimit(100)
 z = -4  # posição da placa perfurada
 
 
@@ -96,10 +100,38 @@ tela: List[List[Point, str, Point]]
 """
 # Calcula lista de colisões com os objetos, qual o primeiro objeto e o t do ponto atingido
 lista_colisoes = []
-tela = painel_initt(4, 100, 100)
+tela = Panel(4, 100, 100)
+
+print("debug: 103")
 for l in range(len(placa)):
     for c in range(len(placa[l])):
-        tela[l][c][1] = '.'  # TODO transformar em objeto
+        tela.set_simbolo_furo(l, c, '0')
+        furo = placa[l][c]
+        raio = Ray(p_obs, furo)
+        min_t = 999999999999
+        primeiro_obj = None
+        for obj in objects:
+            intersecoes = obj.intersection_with(raio)
+            for t in intersecoes:
+                lista_colisoes.append([furo, obj, raio.ponto(t), t])
+                if t < min_t:
+                    min_t = t
+                    primeiro_obj = obj
+
+        # CASO SEJA NECESSARIO MUDAR ALGUM ATRIBUTO DO OBJETO ATINGIDO, USAR O primeir_obj
+        tela.set_simbolo_furo(l, c, primeiro_obj.cor)
+        tela.set_t_furo(l, c, raio.ponto(min_t))
+
+# pintar tela
+tela.show()
+
+"""
+
+lista_colisoes = []
+tela = Panel(4, 100, 100)
+for l in range(len(placa)):
+    for c in range(len(placa[l])):
+        tela[l][c][1] = '.'  # TODO transformar em objeto. Aqui esta dando erro dessa forma
         furo = placa[l][c]
         print(furo)
         raio = Ray(p_obs, furo)
@@ -121,6 +153,7 @@ for lin in range(len(tela)):
     for col in range(len(tela[lin])):
         print(tela[lin][col][1])
 
+"""
 """
 [
     [[0,0,0],'.'],[0,1,0],'.'],[0,2,0],'.'],[0,3,0],'.'],[0,4,0],'.']

@@ -14,9 +14,7 @@ Atributos:
 """
 import numpy as np
 
-from auxiliar.CalcWithVectors import diff
 from auxiliar.CalcWithVectors import produto_escalar
-from estruturaDeDados.Point import Point
 from auxiliar.QuadraticOperations import roots
 
 
@@ -25,13 +23,16 @@ class Cone:
 
     # TODO: cálculo de theta. Verificar se o que esta comentado esta correto
     def __init__(self, centro_base, raio, altura, v_direcao):
+        """
+
+        :rtype: object
+        """
         self.__vertice = np.array(centro_base)
         self.__v_direcao = np.array(v_direcao)
         self.__altura = altura
         self.__raio = raio
         self.__cor = '_'
 
-    # TODO: implementar a equação de interseção com a reta
     @staticmethod
     def intersection_with(self, reta):
         """retona uma lista com os t's dos pontos, se exitirem.
