@@ -1,6 +1,7 @@
 import numpy as np
 from numpy import linalg as LG
-from estruturaDeDados import Point
+
+from estruturaDeDados.Point import Point
 
 """ Para transformar lista num vetor mesmo
     a = [1, 2, 3] -> listas, python puro. NÃO se comportam como vetores
@@ -23,8 +24,8 @@ def norma(vetor):
 
 
 def normalizar(vetor):
-    norma = LG.norm(vetor)
-    return vetor / norma
+    n = LG.norm(vetor)
+    return vetor / n
 
 
 def diff(vetor1, vetor2):
@@ -39,9 +40,10 @@ def vetor_entre_2_pontos(origem: Point, destino: Point):
     z = destino.z - origem.z
     return np.array([x, y, z])
 
-def transform_camera(matrix, ponto):
-    ponto1 = np.array([ponto.x,ponto.y,ponto.z])
-    ponto1 = np.append(ponto1,[1])
-    produto = np.dot(matrix,ponto1)
-    return produto
 
+def transform_camera(matrix, ponto):
+    ponto1 = np.array([ponto.x, ponto.y, ponto.z])
+    ponto1 = np.append(ponto1, [1])
+    produto = np.dot(matrix, ponto1)
+    print(produto.item(0), produto.item(1), produto.item(2))
+    return Point(produto.item(0), produto.item(1), produto.item(2))

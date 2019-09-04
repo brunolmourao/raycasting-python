@@ -7,7 +7,10 @@ Atributos:
     __v_normal: Vetor
         Vetor Unitario que determina a direção da reta
 """
+
 import numpy as np
+
+from estruturaDeDados.Point import Point
 
 
 class Ray:
@@ -18,8 +21,10 @@ class Ray:
 
     # TODO verificar se essas operações estao adequadas para a estrutura de dados
     # que vamos usar
-    def ponto(self, t):
-        return self.__p + t * self.__v_direcao
+    def ponto(self, t: float):
+        v = self.p + t * self.v_direcao
+        p = Point(v[0], v[1], v[2])
+        return p
 
     # Método getters
     @property
