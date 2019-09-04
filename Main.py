@@ -2,13 +2,13 @@
 Programa onde o loop principal irá executar
 """
 from typing import List
-import  auxiliar.CalcWithVectors as calc
+import auxiliar.CalcWithVectors as calc
 from estruturaDeDados.Point import Point
 from objetos.Cilinder import Cillinder
 from objetos.Cone import Cone
 from objetos.Cube import Cube
 from objetos.Ray import Ray
-import  numpy as np
+import numpy as np
 
 z = -4  # posição da placa perfurada
 
@@ -36,21 +36,6 @@ def painel(tam, num_lin, num_col):
     return p
 
 
-# Cenário
-objects = []
-
-cube1 = Cube(Point(0, -2, -20), 6, Point(0, 1, 0))
-cube2 = Cube(Point(0, 4, -20), 6, Point(0, 1, 0))
-cube3 = Cube(Point(0, 10, -20), 6, Point(0, 1, 0))
-cone = Cone(Point(0, 0, -10), 3, 8, Point(0, 1, 0))
-cilindro = Cillinder(Point(0, -2, -10), 0.5, 8, Point(0, 1, 0))
-
-objects.append(cube1)
-objects.append(cube2)
-objects.append(cube3)
-objects.append(cone)
-objects.append(cilindro)
-
 obs = np.array([30,4,0])
 look_at = np.array([7,5,0])
 K = obs - look_at
@@ -71,21 +56,34 @@ camera = np.vstack((camera,obs))
 camera = np.transpose(camera)
 placa = painel(4, 100, 100)
 
-p1 = calc.transform_camera(camera,Point(7,5,0))
+# Cenário
+objects = []
 
-print(p1)
- 
-""""
+cube1 = Cube(calc.transform_camera(camera,Point(0, -2, -20)), 6, calc.transform_camera(camera,Point(0, 1, 0)))
+cube2 = Cube(calc.transform_camera(camera,Point(0, 4, -20)), 6, calc.transform_camera(camera,Point(0, 1, 0)))
+cube3 = Cube(calc.transform_camera(camera,Point(0, 10, -20)), 6, calc.transform_camera(camera,Point(0, 1, 0)))
+cone = Cone(calc.transform_camera(camera,Point(0, 0, -10)), 3, 8, calc.transform_camera(camera,Point(0, 1, 0)))
+cone = Cone(calc.transform_camera(camera,Point(0, 0, -10)), 3, 8, calc.transform_camera(camera,Point(0, 1, 0)))
+cilindro = Cillinder(calc.transform_camera(camera,Point(0, -2, -10)), 0.5, 8, calc.transform_camera(camera,Point(0, 1, 0)))
+
+objects.append(cube1)
+objects.append(cube2)
+objects.append(cube3)
+objects.append(cone)
+objects.append(cilindro)
+
 
 # Nesse laço o raio fura todos os objetos
 lista_colisoes = []
 for furo in placa:
     raio = Ray(obs, furo)
     for obj in objects:
-        intersecoes = obj.intersection_with(obj,raio)
+        intersecoes = obj.intersection_with(obj, raio)
         for t in intersecoes:
             lista_colisoes.append([furo, obj, raio.ponto(t), t])
 
+
+""""
 # TODO pintar a tela
 # Neste laço pintamos uma tela
 tela = painel(4, 100, 100)

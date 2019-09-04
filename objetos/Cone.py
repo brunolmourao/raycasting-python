@@ -17,6 +17,7 @@ import numpy as np
 from auxiliar.CalcWithVectors import diff
 from auxiliar.CalcWithVectors import produto_escalar
 from estruturaDeDados.Point import Point
+from auxiliar.QuadraticOperations import roots
 
 
 class Cone:
@@ -24,7 +25,7 @@ class Cone:
 
     # TODO: cálculo de theta. Verificar se o que esta comentado esta correto
     def __init__(self, centro_base, raio, altura, v_direcao):
-        self.__vertice = Point(centro_base.x, centro_base.y + altura, centro_base.z)
+        self.__vertice = np.array(centro_base)
         self.__v_direcao = np.array(v_direcao)
         self.__altura = altura
         self.__raio = raio
@@ -34,25 +35,16 @@ class Cone:
     def intersection_with(self, reta):
         """retona uma lista com os t's dos pontos, se exitirem.
         """
-        p_raio = np.array([self.__raio, 0, 0])
+        p_raio = np.array([self.__raio, 0, 0, 0])
         geratriz = self.__vertice - p_raio
         theta = self.__altura/np.linalg.norm(geratriz)
-        v = diff(self.__vertice, reta.p)
+        v = self.__vertice - reta.p
 
         a = np.power([produto_escalar(reta.v_normal, self.__v_direcao)], 2) - produto_escalar(reta.v_normal, reta.v_normal) * np.power([np.cos(theta)], 2)
         b = np.power([produto_escalar(v, reta.v_normal)], 2) * np.power([np.cos(theta)], 2) - produto_escalar(v, self.__v_direcao) * produto_escalar(reta.v_normal, self.__v_direcao)
         c = np.power([produto_escalar(v, self.__v_direcao)], 2) - produto_escalar(v, v) * np.power([np.cos(theta)], 2)
 
-        discriminant = np.power([b], 2) - a*c
-
-        if discriminant < 0:
-            return False
-        if a == 0:
-            return [(-c/2*b)]
-
-        t1 = (-b + np.sqrt(discriminant))/a
-        t2 = (-b - np.sqrt(discriminant))/a
-        return [t1, t2]
+        return roots(a, b, c)
 
     # Método getters
     @property

@@ -14,7 +14,7 @@ class Ray:
     # Método Construtor
     def __init__(self, p, v_normal):
         self.__p = np.array(p)
-        self.__v_direcao = np.array(v_normal)
+        self.__v_direcao = np.array([v_normal[0].x, v_normal[0].y, v_normal[0].z])
 
     # TODO verificar se essas operações estao adequadas para a estrutura de dados
     # que vamos usar
