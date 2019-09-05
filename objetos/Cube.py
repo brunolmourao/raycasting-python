@@ -8,9 +8,11 @@
         Um vetor unitario que é a normal a base do cubo
 """
 import numpy as np
-from auxiliar import CalcWithVectors
+
+import auxiliar.CalcWithVectors as calc
 from estruturaDeDados.Point import Point
 from objetos.Ray import Ray
+
 
 class Cube(object):
     __lista_vertices = []
@@ -23,25 +25,33 @@ class Cube(object):
         self.calc_arestas()
         self.calc_faces()
         self.v_direcao = v_direcao
+        self.__cor = ''
 
-    # TODO: implementar a equação de interseção com a reta
-    # Pecorrer a lista de faces triangulares e usar o metodo
-    @staticmethod
-    def intersection_with(self, reta:Ray):
+    # Percorrer a lista de faces triangulares e usar o metodo
+    def intersection_with(self, reta: Ray):
         t = []
         for x in self.__lista_faces:
             # Calcula os vetores que formam o plano
-            v1 = CalcWithVectors.vetor_entre_2_pontos(x[1], x[2])
-            v2 = CalcWithVectors.vetor_entre_2_pontos(x[1], x[3])
+            v1 = calc.vetor_entre_2_pontos(x[1], x[2])
+            v2 = calc.vetor_entre_2_pontos(x[1], x[3])
             # Calcular o vetor n do plano
             v3 = np.cross(v1, v2)
-            n = CalcWithVectors.normalizar(v3)
+            # print(v3)
+            n = calc.normalizar(v3)
+            p0 = np.array([reta.p.x, reta.p.y, reta.p.z])
             # Calculando o t do plano de intersecção
-            tint = CalcWithVectors.produto_escalar(v1 - reta.p, n) / CalcWithVectors.produto_escalar(reta.v_normal, n)
-            t.append(tint)
+            # Validando coordenadas baricêntricas
+            v_direcao = reta.v_direcao_array()
+            p = calc.calc_baricentro(x[1], x[2], x[3])
+            val = calc.validar_faces_triangulares(p, x[1], x[2], x[3])
+            if val:
+                if calc.produto_escalar(v_direcao, n) != 0:
+                    tint = calc.produto_escalar(v1 - p0, n) / calc.produto_escalar(v_direcao, n)
+                    t.append(tint)
         return t
 
-    # Calcular os vértices a partir das entradas e colocar na lista
+        # Calcular os vértices a partir das entradas e colocar na lista
+
     def calc_verticies(self, centro_base, aresta):
         base_top_y = centro_base.y + aresta
         base_top = Point(centro_base.x, base_top_y, centro_base.z)  # ponto central da base superior
@@ -97,7 +107,15 @@ class Cube(object):
         self.__lista_faces.append([7, lista_v[5][1], lista_v[1][1], lista_v[2][1]])
         self.__lista_faces.append([8, lista_v[6][1], lista_v[5][1], lista_v[3][1]])
         self.__lista_faces.append([9, lista_v[7][1], lista_v[3][1], lista_v[1][1]])
-        self.__lista_faces.append([10, lista_v[4][1], lista_v[8][1], lista_v[1][1]])
+        self.__lista_faces.append([10, lista_v[4][1], lista_v[7][1], lista_v[1][1]])
         # Faces Triangulares da Base Superior
         self.__lista_faces.append([11, lista_v[5][1], lista_v[7][1], lista_v[4][1]])
         self.__lista_faces.append([12, lista_v[6][1], lista_v[5][1], lista_v[4][1]])
+
+    @property
+    def cor(self):
+        return self.__cor
+
+    @cor.setter
+    def cor(self, cor):
+        self.__cor = cor
