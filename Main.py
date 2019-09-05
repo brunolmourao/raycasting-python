@@ -6,6 +6,7 @@ import sys
 from typing import List
 
 import numpy as np
+import math
 
 import auxiliar.CalcWithVectors as calc
 from estruturaDeDados.Point import Point
@@ -69,6 +70,9 @@ def search(lista, valor):
         yield from ((i, j) for j, item in enumerate(sublista) if item == valor)
 
 
+def is_nan(x):
+    return (x is np.nan or x != x)
+
 # Coordenadas para camera e placa
 p_obs = [30, 4, 0]
 Point(30, 4, 0)
@@ -79,17 +83,16 @@ placa = painel_initt(4, 100, 100)
 # Cenário
 objects = []
 cube1 = Cube(calc.transform_camera(camera, Point(0, -2, -20)), 6, calc.transform_camera(camera, Point(0, 1, 0)))
-cube2 = Cube(calc.transform_camera(camera, Point(0, 4, -20)), 6, calc.transform_camera(camera, Point(0, 1, 0)))
-cube3 = Cube(calc.transform_camera(camera, Point(0, 10, -20)), 6, calc.transform_camera(camera, Point(0, 1, 0)))
-cone = Cone(calc.transform_camera(camera, Point(0, 0, -10)), 3, 8, calc.transform_camera(camera, Point(0, 1, 0)))
-cilindro = Cillinder(calc.transform_camera(camera, Point(0, -2, -10)), 0.5, 8,
-                     calc.transform_camera(camera, Point(0, 1, 0)))
+#cube2 = Cube(calc.transform_camera(camera, Point(0, 4, -20)), 6, calc.transform_camera(camera, Point(0, 1, 0)))
+#cube3 = Cube(calc.transform_camera(camera, Point(0, 10, -20)), 6, calc.transform_camera(camera, Point(0, 1, 0)))
+#cone = Cone(calc.transform_camera(camera, Point(0, 0, -10)), 3, 8, calc.transform_camera(camera, Point(0, 1, 0)))
+#cilindro = Cillinder(calc.transform_camera(camera, Point(0, -2, -10)), 0.5, 8, calc.transform_camera(camera, Point(0, 1, 0)))
 
 objects.append(cube1)
-objects.append(cube2)
-objects.append(cube3)
-objects.append(cone)
-objects.append(cilindro)
+#objects.append(cube2)
+#objects.append(cube3)
+#objects.append(cone)
+#objects.append(cilindro)
 
 """
 # lista_colisoes: List[List[Union[Union[Point, Union[Cube, Cone, Cillinder], Point, float], Any]]]
@@ -110,15 +113,16 @@ for l in range(len(placa)):
         min_t = 999999999999
         primeiro_obj = None
         for obj in objects:
-            print(obj, raio, raio.p, raio.p.x)
             intersecoes = obj.intersection_with(raio)
             for t in intersecoes:
-                lista_colisoes.append([furo, obj, raio.ponto(t), t])
-                if t < min_t:
-                    min_t = t
-                    primeiro_obj = obj
+                if(not is_nan(t)):
+                    lista_colisoes.append([furo, obj, raio.ponto(t), t])
+                    if t < min_t:
+                         min_t = t
+                         primeiro_obj = obj
 
         # CASO SEJA NECESSARIO MUDAR ALGUM ATRIBUTO DO OBJETO ATINGIDO, USAR O primeir_obj
+        #print('::', l, c, primeiro_obj.cor)
         tela.set_simbolo_furo(l, c, primeiro_obj.cor)
         tela.set_t_furo(l, c, raio.ponto(min_t))
 

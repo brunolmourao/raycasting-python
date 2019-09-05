@@ -25,7 +25,7 @@ class Cube(object):
         self.calc_arestas()
         self.calc_faces()
         self.v_direcao = v_direcao
-        self.__cor = ''
+        self.__cor = 'blue'
 
     # Percorrer a lista de faces triangulares e usar o metodo
     def intersection_with(self, reta: Ray):
