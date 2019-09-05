@@ -21,13 +21,12 @@ from objetos.Ray import Ray
 class Cillinder:
     # Método Construtor
     def __init__(self, centro_base, raio, altura, v_direcao):
-        self.__centro_base = np.array(centro_base)
+        self.__centro_base = centro_base
         self.__raio = raio
         self.__altura = altura
-        self.__v_direcao = np.array(v_direcao)
+        self.__v_direcao = v_direcao
         self.__cor = '_'
 
-    @staticmethod
     def ponto(self, t):
         rq = produto_escalar(self.__raio, self.__raio)
         sub = Ray.ponto(t) - self.__centro_base
@@ -40,15 +39,15 @@ class Cillinder:
             return False
 
     def intersection_with(self, reta):
-        w = self.__calc_coefficients__(reta.v_direcao)
-        v = self.__calc_coefficients__(reta.p - self.__centro_base)
+        w = self.__calc_coefficients__(reta.v_direcao.to_array())
+        v = self.__calc_coefficients__(reta.p.to_array() - self.__centro_base.to_array())
         a = produto_escalar(w, w)
         b = produto_escalar(v, w)
         c = produto_escalar(v, v) - produto_escalar(self.__raio, self.__raio)
         return roots(a, b, c)
 
     def __calc_coefficients__(self, coe):
-        return coe - produto_escalar(produto_escalar(coe, self.__v_direcao), self.__v_direcao)
+        return coe - produto_escalar(produto_escalar(coe, self.__v_direcao.to_array()), self.__v_direcao.to_array())
 
     # Método getters
     @property
