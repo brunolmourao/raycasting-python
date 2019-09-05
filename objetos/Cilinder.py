@@ -11,10 +11,11 @@ Atributos:
         Vetor unitário que define a direção do eixo do cilindro
 """
 import numpy as np
-from objetos.Ray import Ray
-from auxiliar.CalcWithVectors import produto_escalar
+
 from auxiliar.CalcWithVectors import norma
+from auxiliar.CalcWithVectors import produto_escalar
 from auxiliar.QuadraticOperations import roots
+from objetos.Ray import Ray
 
 
 class Cillinder:
@@ -38,9 +39,8 @@ class Cillinder:
         else:
             return False
 
-    @staticmethod
     def intersection_with(self, reta):
-        w = self.__calc_coefficients__(reta.v_normal)
+        w = self.__calc_coefficients__(reta.v_direcao)
         v = self.__calc_coefficients__(reta.p - self.__centro_base)
         a = produto_escalar(w, w)
         b = produto_escalar(v, w)

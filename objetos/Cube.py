@@ -28,7 +28,6 @@ class Cube(object):
         self.__cor = ''
 
     # Percorrer a lista de faces triangulares e usar o metodo
-    @staticmethod
     def intersection_with(self, reta: Ray):
         t = []
         for x in self.__lista_faces:
@@ -45,8 +44,8 @@ class Cube(object):
             p = calc.calc_baricentro(x[1], x[2], x[3])
             val = calc.validar_faces_triangulares(p, x[1], x[2], x[3])
             if val:
-                if calc.produto_escalar(reta.v_normal, n) != 0:
-                    tint = calc.produto_escalar(v1 - p0, n) / calc.produto_escalar(reta.v_normal, n)
+                if calc.produto_escalar(reta.v_direcao, n) != 0:
+                    tint = calc.produto_escalar(v1 - p0, n) / calc.produto_escalar(reta.v_direcao, n)
                     t.append(tint)
         return t
 

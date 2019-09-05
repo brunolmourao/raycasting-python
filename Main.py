@@ -6,12 +6,12 @@ import sys
 from typing import List
 
 import numpy as np
-from objetos.Cube import Cube
 
 import auxiliar.CalcWithVectors as calc
 from estruturaDeDados.Point import Point
 from objetos.Cilinder import Cillinder
 from objetos.Cone import Cone
+from objetos.Cube import Cube
 from objetos.Panel import Panel
 from objetos.Ray import Ray
 
@@ -71,6 +71,7 @@ def search(lista, valor):
 
 # Coordenadas para camera e placa
 p_obs = [30, 4, 0]
+Point(30, 4, 0)
 p_look_at = [7, 5, 0]
 camera = camera_initt(p_obs, p_look_at)
 placa = painel_initt(4, 100, 100)
@@ -102,15 +103,15 @@ tela: List[List[Point, str, Point]]
 lista_colisoes = []
 tela = Panel(4, 100, 100)
 
-print("debug: 103")
 for l in range(len(placa)):
     for c in range(len(placa[l])):
         tela.set_simbolo_furo(l, c, '0')
         furo = placa[l][c]
-        raio = Ray(p_obs, furo)
+        raio = Ray(Point(30, 4, 0), furo)
         min_t = 999999999999
         primeiro_obj = None
         for obj in objects:
+            print(obj, raio, raio.p, raio.p.x)
             intersecoes = obj.intersection_with(raio)
             for t in intersecoes:
                 lista_colisoes.append([furo, obj, raio.ponto(t), t])
@@ -124,45 +125,6 @@ for l in range(len(placa)):
 
 # pintar tela
 tela.show()
-
-"""
-
-lista_colisoes = []
-tela = Panel(4, 100, 100)
-for l in range(len(placa)):
-    for c in range(len(placa[l])):
-        tela[l][c][1] = '.'  # TODO transformar em objeto. Aqui esta dando erro dessa forma
-        furo = placa[l][c]
-        print(furo)
-        raio = Ray(p_obs, furo)
-        min_t = 999999999999
-        primeiro_obj = None
-        for obj in objects:
-            intersecoes = obj.intersection_with(raio)
-            for t in intersecoes:
-                lista_colisoes.append([furo, obj, raio.ponto(t), t])
-                if t < min_t:
-                    min_t = t
-                    primeiro_obj = obj
-                    print(primeiro_obj)
-        # CASO SEJA NECESSARIO MUDAR ALGUM ATRIBUTO DO OBJETO ATINGIDO, USAR O primeir_obj
-        tela[l][c][1] = primeiro_obj.cor
-        tela[l][c][2] = raio.ponto(min_t)
-
-# pintar tela
-for lin in range(len(tela)):
-    for col in range(len(tela[lin])):
-        print(tela[lin][col][1])
-
-"""
-"""
-[
-    [[0,0,0],'.'],[0,1,0],'.'],[0,2,0],'.'],[0,3,0],'.'],[0,4,0],'.']
-    [[1,0,0],'.'],[1,1,0],'.'],[1,2,0],'.'],[1,3,0],'.'],[1,4,0],'.']
-    [[2,0,0],'.'],[2,1,0],'.'],[2,2,0],'.'],[2,3,0],'.'],[2,4,0],'.']
-    [[3,0,0],'.'],[3,1,0],'.'],[3,2,0],'.'],[3,3,0],'.'],[3,4,0],'.']
-]
-"""
 """
 ........................................................................................................
 ........................................................................................................

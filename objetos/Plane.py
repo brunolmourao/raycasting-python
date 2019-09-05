@@ -7,6 +7,7 @@ Atributos
         Vetor unitário perpendicular ao plano.
 """
 import numpy as np
+
 from auxiliar.CalcWithVectors import produto_escalar
 
 
@@ -19,7 +20,7 @@ class Plane:
     def intersection_with(self, reta):
         """ Verifica inicialmente se a reta e o plano não são parelelos
             (u.n != 0), caso sejam retorna false, caso contrário retorna t"""
-        prod_esc_un = produto_escalar(reta.v_normal, self.v_normal)
+        prod_esc_un = produto_escalar(reta.v_direcao, self.v_normal)
         if prod_esc_un:
             t = produto_escalar(self.__p - reta.p, self.__v_normal) / prod_esc_un
             return t

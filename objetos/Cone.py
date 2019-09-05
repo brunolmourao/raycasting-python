@@ -33,7 +33,6 @@ class Cone:
         self.__raio = raio
         self.__cor = '_'
 
-    @staticmethod
     def intersection_with(self, reta):
         """retona uma lista com os t's dos pontos, se exitirem.
         """
@@ -42,12 +41,12 @@ class Cone:
         theta = self.__altura / np.linalg.norm(geratriz)
         v = self.__vertice - reta.p
 
-        a = np.power([produto_escalar(reta.v_normal, self.__v_direcao)], 2) - produto_escalar(reta.v_normal,
-                                                                                              reta.v_normal) * np.power(
+        a = np.power([produto_escalar(reta.v_direcao, self.__v_direcao)], 2) - produto_escalar(reta.v_direcao,
+                                                                                               reta.v_direcao) * np.power(
             [np.cos(theta)], 2)
-        b = np.power([produto_escalar(v, reta.v_normal)], 2) * np.power([np.cos(theta)], 2) - produto_escalar(v,
-                                                                                                              self.__v_direcao) * produto_escalar(
-            reta.v_normal, self.__v_direcao)
+        b = np.power([produto_escalar(v, reta.v_direcao)], 2) * np.power([np.cos(theta)], 2) - produto_escalar(v,
+                                                                                                               self.__v_direcao) * produto_escalar(
+            reta.v_direcao, self.__v_direcao)
         c = np.power([produto_escalar(v, self.__v_direcao)], 2) - produto_escalar(v, v) * np.power([np.cos(theta)], 2)
 
         return roots(a, b, c)
