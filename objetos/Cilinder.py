@@ -39,12 +39,14 @@ class Cillinder:
             return False
 
     def intersection_with(self, reta):
+        t = []
         w = self.__calc_coefficients__(reta.v_direcao.to_array())
         v = self.__calc_coefficients__(reta.p.to_array() - self.__centro_base.to_array())
         a = produto_escalar(w, w)
         b = produto_escalar(v, w)
         c = produto_escalar(v, v) - produto_escalar(self.__raio, self.__raio)
-        return roots(a, b, c)
+        t = roots(a, b, c)
+        return t
 
     def __calc_coefficients__(self, coe):
         return coe - produto_escalar(produto_escalar(coe, self.__v_direcao.to_array()), self.__v_direcao.to_array())

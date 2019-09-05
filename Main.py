@@ -82,7 +82,6 @@ cube1 = Cube(calc.transform_camera(camera, Point(0, -2, -20)), 6, calc.transform
 cube2 = Cube(calc.transform_camera(camera, Point(0, 4, -20)), 6, calc.transform_camera(camera, Point(0, 1, 0)))
 cube3 = Cube(calc.transform_camera(camera, Point(0, 10, -20)), 6, calc.transform_camera(camera, Point(0, 1, 0)))
 cone = Cone(calc.transform_camera(camera, Point(0, 0, -10)), 3, 8, calc.transform_camera(camera, Point(0, 1, 0)))
-cone = Cone(calc.transform_camera(camera, Point(0, 0, -10)), 3, 8, calc.transform_camera(camera, Point(0, 1, 0)))
 cilindro = Cillinder(calc.transform_camera(camera, Point(0, -2, -10)), 0.5, 8,
                      calc.transform_camera(camera, Point(0, 1, 0)))
 
