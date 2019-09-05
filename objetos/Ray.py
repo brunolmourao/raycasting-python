@@ -26,6 +26,9 @@ class Ray:
         p = Point(v[0], v[1], v[2])
         return p
 
+    def v_direcao_array(self):
+        return np.array([self.v_direcao.x, self.v_direcao.y, self.v_direcao.z])
+
     # Método getters
     @property
     def p(self):

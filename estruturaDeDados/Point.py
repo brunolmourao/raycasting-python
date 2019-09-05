@@ -19,6 +19,9 @@ class Point:
     def print_ponto(self):
         print(self.__x, self.__y, self.__z)
 
+    def to_array(self):
+        return np.array([self.x, self.y, self.z])
+
     @property
     def x(self):
         return self.__x

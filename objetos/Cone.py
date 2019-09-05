@@ -27,27 +27,26 @@ class Cone:
 
         :rtype: object
         """
-        self.__vertice = np.array(centro_base)
-        self.__v_direcao = np.array(v_direcao)
+        self.__vertice = centro_base
+        self.__v_direcao = v_direcao
         self.__altura = altura
         self.__raio = raio
         self.__cor = '_'
 
     def intersection_with(self, reta):
-        """retona uma lista com os t's dos pontos, se exitirem.
+        """retorna uma lista com os t's dos pontos, se exitirem.
         """
-        p_raio = np.array([self.__raio, 0, 0, 0])
-        geratriz = self.__vertice - p_raio
+        p_raio = np.array([self.__raio, 0, 0])
+        geratriz = self.__vertice.to_array() - p_raio
         theta = self.__altura / np.linalg.norm(geratriz)
-        v = self.__vertice - reta.p
+        v = self.__vertice.to_array() - reta.p.to_array()
 
-        a = np.power([produto_escalar(reta.v_direcao, self.__v_direcao)], 2) - produto_escalar(reta.v_direcao,
-                                                                                               reta.v_direcao) * np.power(
-            [np.cos(theta)], 2)
-        b = np.power([produto_escalar(v, reta.v_direcao)], 2) * np.power([np.cos(theta)], 2) - produto_escalar(v,
-                                                                                                               self.__v_direcao) * produto_escalar(
-            reta.v_direcao, self.__v_direcao)
-        c = np.power([produto_escalar(v, self.__v_direcao)], 2) - produto_escalar(v, v) * np.power([np.cos(theta)], 2)
+        a = np.power(produto_escalar(reta.v_direcao.to_array(), self.__v_direcao.to_array()), 2) - \
+            produto_escalar(reta.v_direcao.to_array(), reta.v_direcao.to_array()) * np.power(
+            np.cos(theta), 2)
+        b = np.power(produto_escalar(v, reta.v_direcao.to_array()), 2) * np.power(np.cos(theta), 2) - produto_escalar(
+            v, self.__v_direcao.to_array()) * produto_escalar(reta.v_direcao.to_array(), self.__v_direcao.to_array())
+        c = np.power(produto_escalar(v, self.__v_direcao.to_array()), 2) - produto_escalar(v, v) * np.power(np.cos(theta), 2)
 
         return roots(a, b, c)
 

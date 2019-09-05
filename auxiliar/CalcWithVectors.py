@@ -10,9 +10,9 @@ from estruturaDeDados.Point import Point
 
 
 def produto_escalar(vetor1, vetor2):
-    v1 = np.array(vetor1)
-    v2 = np.array(vetor2)
-    return np.sqrt(np.dot(v1, v2))
+    #v1 = np.array(vetor1)
+    #v2 = np.array(vetor2)
+    return np.sqrt(np.dot(vetor1, vetor2))
 
 
 def produto_vetorial(vetor1, vetor2):
