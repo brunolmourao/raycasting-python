@@ -9,6 +9,9 @@
 """
 
 from geometricAttributes.Point import Point
+from geometricAttributes.Face import Face
+import utils.CalcWithVectors as calc
+import numpy as np
 from utils.Ray import Ray
 
 
@@ -26,11 +29,42 @@ class Cube(object):
 
     # TODO: implementar a equação de interseção com a reta
     # Pecorrer a lista de faces triangulares e usar o meto
-    
-    def intersection_with(self, reta):
-        """retona uma lista de t's dos pontos"""
-        t = []
 
+    def intersection_with(self, reta):
+        t = []
+        for face in self.__lista_faces:
+            # Calcula os vetores que formam o plano
+            f1 = face.p1.coords()
+            # print(f"f1 = {f1}")
+            f2 = face.p2.coords()
+            # print(f"f2 = {f2}")
+            f3 = face.p3.coords()
+            # print(f"f3 = {f3}")
+            v1 = calc.diff(f1, f2)
+            # print(f"v1 = {v1}")
+            v2 = calc.diff(f1, f3)
+            # print(f"v2 = {v2}")
+            # Calcular o vetor n do plano
+            v3 = np.cross(v1, v2)
+            # print(f"{v3}v3")
+            if np.linalg.norm(v3) != 0:
+                n = v3 / np.linalg.norm(v3)
+            else:
+                n = v3
+            p0 = reta.p.coords()
+            # print(f"n = {n}")
+            v_direcao = reta.v_normal.coords()
+            # print(f"v_direcao = {v_direcao}")
+            # print(calc.produto_escalar(v_direcao, n))
+            if calc.produto_escalar(v_direcao, n) != 0:
+                tint = calc.produto_escalar(v1 - p0, n) / calc.produto_escalar(v_direcao, n)
+                # print(f"{tint} tint")
+                p = reta.ponto(tint)
+                # print(f"p = {p}")
+                val = calc.validar_faces_triangulares(p, f1, f2, f3)
+                # print(f"val = {val}")
+                if val:
+                    t.append(tint)
         return t
 
     # Calcular os vértices a partir das entradas e colocar na lista
@@ -78,17 +112,17 @@ class Cube(object):
     def calc_faces(self):
         lista_v = self.__lista_vertices
         # Faces Triangulares da Base
-        self.__lista_faces.append([1, lista_v[0][1], lista_v[1][1], lista_v[3][1]])
-        self.__lista_faces.append([2, lista_v[0][1], lista_v[1][1], lista_v[2][1]])
+        self.__lista_faces.append(Face(lista_v[0][1], lista_v[1][1], lista_v[3][1]))
+        self.__lista_faces.append(Face(lista_v[0][1], lista_v[1][1], lista_v[2][1]))
         # Faces Triangulares das faces laterais
-        self.__lista_faces.append([3, lista_v[0][1], lista_v[3][1], lista_v[7][1]])
-        self.__lista_faces.append([4, lista_v[0][1], lista_v[4][1], lista_v[7][1]])
-        self.__lista_faces.append([5, lista_v[0][1], lista_v[2][1], lista_v[4][1]])
-        self.__lista_faces.append([6, lista_v[6][1], lista_v[2][1], lista_v[4][1]])
-        self.__lista_faces.append([7, lista_v[1][1], lista_v[2][1], lista_v[5][1]])
-        self.__lista_faces.append([8, lista_v[2][1], lista_v[5][1], lista_v[6][1]])
-        self.__lista_faces.append([9, lista_v[1][1], lista_v[3][1], lista_v[7][1]])
-        self.__lista_faces.append([10, lista_v[1][1], lista_v[4][1], lista_v[7][1]])
+        self.__lista_faces.append(Face(lista_v[0][1], lista_v[3][1], lista_v[7][1]))
+        self.__lista_faces.append(Face(lista_v[0][1], lista_v[4][1], lista_v[7][1]))
+        self.__lista_faces.append(Face(lista_v[0][1], lista_v[2][1], lista_v[4][1]))
+        self.__lista_faces.append(Face(lista_v[6][1], lista_v[2][1], lista_v[4][1]))
+        self.__lista_faces.append(Face(lista_v[1][1], lista_v[2][1], lista_v[5][1]))
+        self.__lista_faces.append(Face(lista_v[2][1], lista_v[5][1], lista_v[6][1]))
+        self.__lista_faces.append(Face(lista_v[1][1], lista_v[3][1], lista_v[7][1]))
+        self.__lista_faces.append(Face(lista_v[1][1], lista_v[4][1], lista_v[7][1]))
         # Faces Triangulares da Base Superior
-        self.__lista_faces.append([11, lista_v[4][1], lista_v[5][1], lista_v[7][1]])
-        self.__lista_faces.append([12, lista_v[4][1], lista_v[5][1], lista_v[6][1]])
+        self.__lista_faces.append(Face(lista_v[4][1], lista_v[5][1], lista_v[7][1]))
+        self.__lista_faces.append(Face(lista_v[4][1], lista_v[5][1], lista_v[6][1]))

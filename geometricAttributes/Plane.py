@@ -6,7 +6,7 @@ Atributos
     v_normal: Vetor
         Vetor unitário perpendicular ao plano.
 """
-from auxiliar.CalcWithVectors import produto_escalar
+from utils.CalcWithVectors import produto_escalar
 
 
 class Plane:

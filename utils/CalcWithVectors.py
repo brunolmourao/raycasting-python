@@ -24,3 +24,16 @@ def normalizar(vetor):
 
 def diff(vetor1, vetor2):
     return vetor2 - vetor1
+
+
+def validar_faces_triangulares(p, p1, p2, p3):
+    p1p = diff(p, p1)
+    p2p = diff(p, p2)
+    p3p = diff(p, p3)
+    v1v2 = produto_vetorial(p1p, p2p)
+    v2v3 = produto_vetorial(p2p, p3p)
+    v3v1 = produto_vetorial(p3p, p1p)
+    if produto_escalar(v1v2, v2v3) > 0:
+        if produto_escalar(v1v2, v3v1) > 0:
+            return True
+    return False
