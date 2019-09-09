@@ -18,6 +18,9 @@ from utils.QuadraticOperations import roots
 
 
 class Cillinder:
+    __prop_obj_d = []
+    __prop_obj_s = []
+
     # Método Construtor
     def __init__(self, centro_base, raio, altura, v_direcao):
         self.__centro_base = np.array(centro_base)

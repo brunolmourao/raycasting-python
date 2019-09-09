@@ -19,6 +19,8 @@ class Cube(object):
     __lista_vertices = []
     __lista_arestas = []
     __lista_faces = []
+    __prop_obj_d = []
+    __prop_obj_s = []
 
     # Método construtor do cubo , alocando todas as listas necessárias
     def __init__(self, centro_base, aresta, v_direcao):

@@ -22,6 +22,8 @@ from geometricAttributes.Point import Point
 
 class Cone:
     __theta = 0
+    __prop_obj_d = []
+    __prop_obj_s = []
 
     # TODO: cálculo de theta. Verificar se o que esta comentado esta correto
     def __init__(self, centro_base, raio, altura, v_direcao):
