@@ -37,34 +37,22 @@ class Cube(object):
         for face in self.__lista_faces:
             # Calcula os vetores que formam o plano
             f1 = face.p1.coords()
-            # print(f"f1 = {f1}")
             f2 = face.p2.coords()
-            # print(f"f2 = {f2}")
             f3 = face.p3.coords()
-            # print(f"f3 = {f3}")
             v1 = calc.diff(f1, f2)
-            # print(f"v1 = {v1}")
             v2 = calc.diff(f1, f3)
-            # print(f"v2 = {v2}")
             # Calcular o vetor n do plano
             v3 = np.cross(v1, v2)
-            # print(f"{v3}v3")
             if np.linalg.norm(v3) != 0:
                 n = v3 / np.linalg.norm(v3)
             else:
                 n = v3
             p0 = reta.p.coords()
-            # print(f"n = {n}")
             v_direcao = reta.v_normal.coords()
-            # print(f"v_direcao = {v_direcao}")
-            # print(calc.produto_escalar(v_direcao, n))
             if calc.produto_escalar(v_direcao, n) != 0:
                 tint = calc.produto_escalar(v1 - p0, n) / calc.produto_escalar(v_direcao, n)
-                # print(f"{tint} tint")
                 p = reta.ponto(tint)
-                # print(f"p = {p}")
                 val = calc.validar_faces_triangulares(p, f1, f2, f3)
-                # print(f"val = {val}")
                 if val:
                     t.append(tint)
         return t

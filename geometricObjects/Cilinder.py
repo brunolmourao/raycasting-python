@@ -45,7 +45,7 @@ class Cillinder:
         v = self.__calc_coefficients__(reta.p - self.__centro_base)
         a = produto_escalar(w, w)
         b = produto_escalar(v, w)
-        c = produto_escalar(v, v) - produto_escalar(self.__raio, self.__raio)
+        c = produto_escalar(v, v) - self.__raio * self.__raio
         return roots(a, b, c)
 
     def __calc_coefficients__(self, coe):
