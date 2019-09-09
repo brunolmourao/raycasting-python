@@ -40,7 +40,7 @@ class Cone:
         theta = self.__altura / np.linalg.norm(geratriz)
         v = self.__vertice.coords() - reta.p.to_array()
 
-        a = np.power(produto_escalar(reta.v_direcao.coords(), self.__v_direcao, 2)) - \
+        a = np.power(produto_escalar(reta.v_direcao.coords(), self.__v_direcao), 2) - \
             produto_escalar(reta.v_direcao.coords(), reta.v_direcao.coords()) * np.power(
             np.cos(theta), 2)
         b = np.power(produto_escalar(v, reta.v_direcao.to_array()), 2) * np.power(np.cos(theta), 2) - produto_escalar(
