@@ -37,7 +37,6 @@ class Cillinder:
         else:
             return False
 
-
     def intersection_with(self, reta):
         w = self.__calc_coefficients__(reta.v_normal)
         v = self.__calc_coefficients__(reta.p - self.__centro_base)

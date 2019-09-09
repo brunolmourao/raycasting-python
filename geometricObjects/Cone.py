@@ -16,6 +16,7 @@ import numpy as np
 
 from utils.CalcWithVectors import diff
 from utils.CalcWithVectors import produto_escalar
+from utils.QuadraticOperations import roots
 from geometricAttributes.Point import Point
 
 
@@ -30,36 +31,30 @@ class Cone:
         self.__raio = raio
 
     # TODO: implementar a equação de interseção com a reta
-   
+
     def intersection_with(self, reta):
-        """retona uma lista com os t's dos pontos, se exitirem.
-        """
         p_raio = np.array([self.__raio, 0, 0])
-
-        print("p_raio:",p_raio)
-        print("self.__vertice.coords:",self.__vertice.coords())
-
         geratriz = self.__vertice.coords() - p_raio
+        theta = self.__altura / np.linalg.norm(geratriz)
+        v = self.__vertice.coords() - reta.p.to_array()
 
-        #ângulo que a geratriz forma com o eixo do cone
-        theta = self.__altura/np.linalg.norm(geratriz)
-
-        v = diff(self.__vertice, reta.p)
-
-        a = np.power([produto_escalar(reta.v_normal, self.__v_direcao)], 2) - produto_escalar(reta.v_normal, reta.v_normal) * np.power([np.cos(theta)], 2)
-        b = np.power([produto_escalar(v, reta.v_normal)], 2) * np.power([np.cos(theta)], 2) - produto_escalar(v, self.__v_direcao) * produto_escalar(reta.v_normal, self.__v_direcao)
-        c = np.power([produto_escalar(v, self.__v_direcao)], 2) - produto_escalar(v, v) * np.power([np.cos(theta)], 2)
-
-        discriminant = np.power([b], 2) - a*c
-
-        if discriminant < 0:
-            return False
-        if a == 0:
-            return [(-c/2*b)]
-
-        t1 = (-b + np.sqrt(discriminant))/a
-        t2 = (-b - np.sqrt(discriminant))/a
-        return [t1, t2]
+        a = np.power(produto_escalar(reta.v_direcao.coords(), self.__v_direcao, 2)) - \
+            produto_escalar(reta.v_direcao.coords(), reta.v_direcao.coords()) * np.power(
+            np.cos(theta), 2)
+        b = np.power(produto_escalar(v, reta.v_direcao.to_array()), 2) * np.power(np.cos(theta), 2) - produto_escalar(
+            v, self.__v_direcao) * produto_escalar(reta.v_direcao.to_array(), self.__v_direcao)
+        c = np.power(produto_escalar(v, self.__v_direcao), 2) - produto_escalar(v, v) * np.power(
+            np.cos(theta), 2)
+        # Adicionando validação da Altura
+        tint = roots(a, b, c)
+        index = 0
+        for x in tint:
+            p = reta.ponto(x)
+            if p[1] > self.__altura:
+                tint.pop(index)
+            else:
+                index = index + 1
+        return tint
 
     # Método getters
     @property
