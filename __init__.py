@@ -13,6 +13,9 @@ from geometricAttributes.Point import Point
 from geometricObjects.Cone import Cone
 from geometricObjects.Cube import Cube
 
+from utils.Panel import Panel
+from utils.Ray import Ray
+
 import utils.constant as constant
 
 sys.setrecursionlimit(constant.RECURSION_LIMIT)

@@ -5,6 +5,7 @@ import numpy as np
     a = np.array([1, 2, 3]) -> converte uma lista em vetor
 """
 
+from geometricAttributes.Point import Point
 
 def produto_escalar(vetor1: object, vetor2: object):
     return np.sqrt(np.dot(vetor1, vetor2))
@@ -37,3 +38,11 @@ def validar_faces_triangulares(p, p1, p2, p3):
         if produto_escalar(v1v2, v3v1) > 0:
             return True
     return False
+
+
+def transform_camera(matrix, ponto):
+    ponto1 = np.array([ponto.x, ponto.y, ponto.z])
+    ponto1 = np.append(ponto1, [1])
+    produto = np.dot(matrix, ponto1)
+    # print(produto.item(0), produto.item(1), produto.item(2))
+    return Point(produto.item(0), produto.item(1), produto.item(2))
