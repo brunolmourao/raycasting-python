@@ -38,7 +38,7 @@ class Cone:
         p_raio = np.array([self.__raio, 0, 0])
         geratriz = self.__vertice.coords() - p_raio
         theta = self.__altura / np.linalg.norm(geratriz)
-        v = self.__vertice.coords() - reta.p.to_array()
+        v = self.__vertice.coords() - reta.p.coords()
 
         a = np.power(produto_escalar(reta.v_direcao.coords(), self.__v_direcao), 2) - \
             produto_escalar(reta.v_direcao.coords(), reta.v_direcao.coords()) * np.power(
