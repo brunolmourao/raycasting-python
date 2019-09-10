@@ -19,7 +19,7 @@ def norma(vetor):
 
 
 def normalizar(vetor):
-    vetor / norma(vetor)
+    return vetor / norma(vetor)
 
 
 def diff(vetor1, vetor2):
