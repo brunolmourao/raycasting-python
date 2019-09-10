@@ -51,8 +51,10 @@ class Cube(object):
             v_direcao = reta.v_direcao.coords()
             if calc.produto_escalar(v_direcao, n) != 0:
                 tint = calc.produto_escalar(v1 - p0, n) / calc.produto_escalar(v_direcao, n)
+
                 p = reta.ponto(tint)
-                val = calc.validar_faces_triangulares(p, f1, f2, f3)
+                print(p)
+                val = calc.validar_faces_triangulares(p.coords(), f1, f2, f3)
                 if val:
                     t.append(tint)
         return t
