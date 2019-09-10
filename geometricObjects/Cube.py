@@ -48,7 +48,7 @@ class Cube(object):
             else:
                 n = v3
             p0 = reta.p.coords()
-            v_direcao = reta.v_normal.coords()
+            v_direcao = reta.v_direcao.coords()
             if calc.produto_escalar(v_direcao, n) != 0:
                 tint = calc.produto_escalar(v1 - p0, n) / calc.produto_escalar(v_direcao, n)
                 p = reta.ponto(tint)
