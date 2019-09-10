@@ -24,11 +24,12 @@ class Cone:
     __theta = 0
     __prop_obj_d = []
     __prop_obj_s = []
+    cor = "A"
 
     # TODO: cálculo de theta. Verificar se o que esta comentado esta correto
     def __init__(self, centro_base, raio, altura, v_direcao):
         self.__vertice = Point(centro_base.x, centro_base.y + altura, centro_base.z)
-        self.__v_direcao = np.array(v_direcao)
+        self.__v_direcao = v_direcao.coords()
         self.__altura = altura
         self.__raio = raio
 
@@ -42,13 +43,14 @@ class Cone:
 
         a = np.power(produto_escalar(reta.v_direcao.coords(), self.__v_direcao), 2) - \
             produto_escalar(reta.v_direcao.coords(), reta.v_direcao.coords()) * np.power(
-            np.cos(theta), 2)
-        b = np.power(produto_escalar(v, reta.v_direcao.to_array()), 2) * np.power(np.cos(theta), 2) - produto_escalar(
-            v, self.__v_direcao) * produto_escalar(reta.v_direcao.to_array(), self.__v_direcao)
+            theta, 2)
+        b = np.power(produto_escalar(v, reta.v_direcao.coords()), 2) * np.power(np.cos(theta), 2) - produto_escalar(
+            v, self.__v_direcao) * produto_escalar(reta.v_direcao.coords(), self.__v_direcao)
         c = np.power(produto_escalar(v, self.__v_direcao), 2) - produto_escalar(v, v) * np.power(
             np.cos(theta), 2)
         # Adicionando validação da Altura
         tint = roots(a, b, c)
+        """
         index = 0
         for x in tint:
             p = reta.ponto(x)
@@ -56,6 +58,7 @@ class Cone:
                 tint.pop(index)
             else:
                 index = index + 1
+        """
         return tint
 
     # Método getters

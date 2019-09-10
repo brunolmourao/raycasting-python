@@ -8,7 +8,7 @@ import numpy as np
 from geometricAttributes.Point import Point
 
 def produto_escalar(vetor1: object, vetor2: object):
-    return np.sqrt(np.dot(vetor1, vetor2))
+    return np.dot(vetor1, vetor2)
 
 
 def produto_vetorial(vetor1, vetor2):
