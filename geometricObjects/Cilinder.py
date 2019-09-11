@@ -32,26 +32,22 @@ class Cillinder:
         a = produto_escalar(w, w)
         b = 2 * produto_escalar(v, w)
         c = produto_escalar(v, v) - self.__raio * self.__raio
-        tint = roots(a, b, c)
+        tint = []
+        root = roots(a, b, c)
 
         # TODO corrigir comportamento da validação
         # print(f" tint: {len(tint)}", end=" ")
         # if len(tint) == 0:
         #    print("")
         index = 0
-        for x in tint:
-            #    print(f"tintA: {tint}", end=" ")
+        for x in root:
             p0b = reta.ponto(x).coords() - self.centro_base
             u = self.v_direcao
-            if (produto_escalar(p0b, u) >= 0) and (produto_escalar(p0b, u) <= self.altura):
-                index = index + 1
-            #        print("DONT REMOVE", end=" ")
-            else:
-                tint.pop(index)
-                index = index + 1
-        #       print("REMOVE", end=" ")
-        #   print(f"tintD: {tint}")
-        return tint
+            if (produto_escalar(p0b, u) >= 0) and (produto_escalar(p0b, u) < self.altura):
+                print(f"x = {x}")
+                tint.append(x)
+            # print(f"Roots {root}, tint = {tint}")
+        return root
 
     def calc_coefficien(self, coe):
         return coe - produto_escalar(coe, self.v_direcao) * self.v_direcao

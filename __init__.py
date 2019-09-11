@@ -63,7 +63,7 @@ def camera_init(obs, lookat):
 
 
 # Coordenadas para camera, placa e tela
-num_furos = 36
+num_furos = 60
 tamanho = 6
 viewer = np.array([0, 0, 0])
 look_at = np.array([0, 0, -4])
@@ -85,17 +85,17 @@ cone.set_cor('A')
 cilindro = Cillinder(Point(0, -2, -10), 0.5, 2, Point(0, 1, 0))
 cilindro.set_cor('T')
 
-# objects.append(cube1)
-# objects.append(cube2)
-# objects.append(cube3)
+#objects.append(cube1)
+#objects.append(cube2)
+#objects.append(cube3)
 objects.append(cone)
-# objects.append(cilindro)
+objects.append(cilindro)
 
 lista_colisoes = []
 for l in range(len(placa)):
     #print("\n")
     for c in range(len(placa[l])):
-        print(f"[{l}][{c}]: ", end=" ")
+       # print(f"[{l}][{c}]: ", end=" ")
         furo = placa[l][c]
         raio = Ray(Point(viewer[0], viewer[1], viewer[2]), furo.coords() - viewer)
         min_t = 999999

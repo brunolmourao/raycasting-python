@@ -39,25 +39,19 @@ class Cone:
         b = 2 * (produto_escalar(v, reta.v_direcao) * np.power(cos_theta, 2) - produto_escalar(v, n) * produto_escalar(
             reta.v_direcao, n))
         c = np.power(produto_escalar(v, n), 2) - produto_escalar(v, v) * np.power(cos_theta, 2)
-        tint = roots(a, b, c)
-
+        root = roots(a, b, c)
+        tint = []
         # TODO corrigir comportamento da validação
-        print(f" tint: {len(tint)}", end=" ")
-        if len(tint) == 0:
-            print("")
-        index = 0
-        for x in tint:
-            print(f"tintA: {tint} x:{x} index: {index} ", end=" ")
+        #print(f" tint: {len(root)}", end=" ")
+        for x in root:
+            #print(f"tintA: {root} x:{x} index: {index} ", end=" ")
             p = reta.ponto(x)
             k = self.vertice - p.coords()
             if (produto_escalar(k, n) >= 0) and (produto_escalar(k, n) <= self.altura):
-                index = index + 1
-                print("DONT REMOVE", end=" ")
-            else:
-                tint.pop(index)
-                # tint.pop(index)
-                print("REMOVE", end=" ")
-            print(f"tintD: {tint}")
+                tint.append(x)
+                #print("DONT REMOVE", end=" ")
+            #print(f"tintD: {tint}")
+        print(f"Roots {root}, tint = {tint}")
         return tint
 
     # Método getters
