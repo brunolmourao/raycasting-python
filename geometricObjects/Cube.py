@@ -1,7 +1,8 @@
 import numpy as np
-from utils.Ray import Ray
-from geometricAttributes.Point import Point
+
 from geometricAttributes.Face import Face
+from geometricAttributes.Point import Point
+
 
 def validar_tint(p, p1, p2, p3):
     p1p = p1 - p
@@ -25,8 +26,6 @@ class Cube(object):
         self.v_direcao = v_direcao
         self.cor = ""
 
-        # Calcular os vértices a partir das entradas e colocar na lista
-
     def intersection_with(self, reta):
         t = []
         for face in self.__lista_faces:
@@ -48,17 +47,15 @@ class Cube(object):
 
     def calc_verticies(self, centro_base, aresta):
         vertices = []
-        base_top_y = centro_base.y + aresta
-        base_top = Point(centro_base.x, base_top_y, centro_base.z)  # ponto central da base superior
-        # base_top.print_ponto()
         v1 = Point(centro_base.x + (aresta / 2), centro_base.y, centro_base.z + (aresta / 2))
         v2 = Point(centro_base.x + (aresta / 2), centro_base.y, centro_base.z - (aresta / 2))
         v3 = Point(centro_base.x - (aresta / 2), centro_base.y, centro_base.z - (aresta / 2))
         v4 = Point(centro_base.x - (aresta / 2), centro_base.y, centro_base.z + (aresta / 2))
-        v5 = Point(base_top.x + (aresta / 2), base_top.y, base_top.z + (aresta / 2))
-        v6 = Point(base_top.x + (aresta / 2), base_top.y, base_top.z - (aresta / 2))
-        v7 = Point(base_top.x - (aresta / 2), base_top.y, base_top.z - (aresta / 2))
-        v8 = Point(base_top.x - (aresta / 2), base_top.y, base_top.z + (aresta / 2))
+        v5 = Point(centro_base.x + (aresta / 2), centro_base.y + aresta, centro_base.z + (aresta / 2))
+        v6 = Point(centro_base.x + (aresta / 2), centro_base.y + aresta, centro_base.z - (aresta / 2))
+        v7 = Point(centro_base.x - (aresta / 2), centro_base.y + aresta, centro_base.z - (aresta / 2))
+        v8 = Point(centro_base.x - (aresta / 2), centro_base.y + aresta, centro_base.z + (aresta / 2))
+
         vertices.append([0, v1])  # lista com íd e o vérticie correspondente
         vertices.append([1, v2])
         vertices.append([2, v3])

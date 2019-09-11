@@ -10,35 +10,18 @@ Atributos:
     v_direcao: Vetor
         Vetor unitário que define a direção do eixo do cilindro
 """
-import numpy as np
-from utils.Ray import Ray
 from utils.CalcWithVectors import produto_escalar
-from utils.CalcWithVectors import norma
 from utils.QuadraticOperations import roots
 
 
 class Cillinder:
-    __prop_obj_d = []
-    __prop_obj_s = []
 
-    # Método Construtor
     def __init__(self, centro_base, raio, altura, v_direcao):
-        self.__centro_base = np.array(centro_base)
+        self.__centro_base = centro_base.coords()
         self.__raio = raio
         self.__altura = altura
-        self.__v_direcao = np.array(v_direcao)
-
-    @staticmethod
-    def ponto(self, t):
-        rq = produto_escalar(self.__raio, self.__raio)
-        sub = Ray.ponto(t) - self.__centro_base
-        prod_esc_sub = produto_escalar(sub, self.__v_direcao)
-        vet_norm = sub - produto_escalar(prod_esc_sub, self.__v_direcao)
-        result = produto_escalar(norma(vet_norm), norma(vet_norm))
-        if result == rq and 0 <= prod_esc_sub <= self.__altura:
-            return True
-        else:
-            return False
+        self.__v_direcao = v_direcao.coords()
+        self.cor = ""
 
     def intersection_with(self, reta):
         w = self.__calc_coefficients__(reta.v_normal)
@@ -84,3 +67,20 @@ class Cillinder:
     @raio.setter
     def raio(self, r):
         self.__raio = r
+
+    def set_cor(self, c):
+        self.cor = c
+
+    """
+        @staticmethod
+        def ponto(self, t):
+            rq = produto_escalar(self.__raio, self.__raio)
+            sub = Ray.ponto(t) - self.__centro_base
+            prod_esc_sub = produto_escalar(sub, self.__v_direcao)
+            vet_norm = sub - produto_escalar(prod_esc_sub, self.__v_direcao)
+            result = produto_escalar(norma(vet_norm), norma(vet_norm))
+            if result == rq and 0 <= prod_esc_sub <= self.__altura:
+                return True
+            else:
+                return False
+    """

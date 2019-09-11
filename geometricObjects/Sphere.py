@@ -8,24 +8,14 @@ A classe Esfera representa uma esfera onde:
 """
 from utils.CalcWithVectors import produto_escalar
 from utils.QuadraticOperations import roots
-from utils.Ray import Ray
 
 
 class Sphere:
     # Método Construtor
     def __init__(self, centro, raio):
-        self.__centro = centro
+        self.__centro = centro.coords()
         self.__raio = raio
-
-    @staticmethod
-    def ponto(self, t):
-        pt = Ray.ponto(t)
-        result = produto_escalar(pt - self.__centro, pt - self.__centro)
-        rq = produto_escalar(self.__raio, self.__raio)
-        if result == rq:
-            return True
-        else:
-            return False
+        self.cor = ""
 
     def intersection_with(self, reta):
         rq = produto_escalar(self.__raio, self.__raio)
@@ -42,3 +32,19 @@ class Sphere:
     @property
     def raio(self):
         return self.__raio
+
+    def set_cor(self, c):
+        self.cor = c
+
+
+"""
+    @staticmethod
+    def ponto(self, t):
+        pt = Ray.ponto(t)
+        result = produto_escalar(pt - self.__centro, pt - self.__centro)
+        rq = produto_escalar(self.__raio, self.__raio)
+        if result == rq:
+            return True
+        else:
+            return False
+"""
