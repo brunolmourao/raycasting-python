@@ -48,7 +48,7 @@ def camera_init(o, lat):
     obs = np.array(o)
     look_at = np.array(lat)
     K = obs - look_at
-    k = calc.normalizar(K)    
+    k = calc.normalizar(K)
     vup = np.array([0, 10, -4])
     V = vup - obs
     I = calc.produto_vetorial(V, k)
@@ -72,7 +72,7 @@ def search(lista, valor):
 
 
 # Coordenadas para camera e placa
-tam_placa = 30
+tam_placa = 18
 p_obs = [0, 0, 0]
 p_look_at = [0, 0, -4]
 camera = camera_init(p_obs, p_look_at)
@@ -80,39 +80,30 @@ placa = painel_init(4, tam_placa, tam_placa)
 
 # Cenário
 objects = []
-cube1 = Cube(calc.transform_camera(camera, Point(0, -2, -20)), 6, calc.transform_camera(camera, Point(0, 1, 0)))
-cube1.set_cor = '1'
-cube2 = Cube(calc.transform_camera(camera, Point(0, 4, -20)), 6, calc.transform_camera(camera, Point(0, 1, 0)))
-cube2.set_cor = '2'
-cube3 = Cube(calc.transform_camera(camera, Point(0, 10, -20)), 6, calc.transform_camera(camera, Point(0, 1, 0)))
-cube3.set_cor = '3'
-cone = Cone(calc.transform_camera(camera, Point(0, 0, -10)), 3, 8, calc.transform_camera(camera, Point(0, 1, 0)))
-#cilindro = Cillinder(calc.transform_camera(camera, Point(0, -2, -10)), 0.5, 2, calc.transform_camera(camera, Point(0, 1, 0)))
+cube1 = Cube(Point(0, -2, -20), 6, Point(0, 1, 0))
+cube1.set_cor('1')
+# print(f" teste {cube1.intersection_with(Ray(Point(0,0,0),Point(3,-2,-17)))}")
+cube2 = Cube(Point(0, 4, -20), 6, Point(0, 1, 0))
+cube2.set_cor('2')
+# cube2 = Cube(calc.transform_camera(camera, Point(0, 4, -20)), 6, calc.transform_camera(camera, Point(0, 1,
+# 0))) cube2.set_cor('2') cube3 = Cube(calc.transform_camera(camera, Point(0, 10, -20)), 6, calc.transform_camera(
+# camera, Point(0, 1, 0))) cube3.set_cor('3') cone = Cone(calc.transform_camera(camera, Point(0, 0, -10)), 3, 8,
+# calc.transform_camera(camera, Point(0, 1, 0))) cilindro = Cillinder(calc.transform_camera(camera, Point(0, -2,
+# -10)), 0.5, 2, calc.transform_camera(camera, Point(0, 1, 0)))
 objects.append(cube1)
 objects.append(cube2)
-objects.append(cube3)
-objects.append(cone)
-#objects.append(cilindro)
-
-"""
-# lista_colisoes: List[List[Union[Union[Point, Union[Cube, Cone, Cillinder], Point, float], Any]]]
-tela: List[List[Point, str, Point]]
-# furo: Point
-# obj: Union[Cube, Cone, Cillinder]
-# t: float
-"""
-# Calcula lista de colisões com os objetos, qual o primeiro objeto e o t do ponto atingido
+# objects.append(cube3)
+# objects.append(cone)
+# objects.append(cilindro)
+obs_array = np.array(p_obs)
 lista_colisoes = []
-tela = Panel(4, tam_placa, tam_placa)
-
+tela = Panel(6, tam_placa, tam_placa)
 for l in range(len(placa)):
-    print("|", end="")
     for c in range(len(placa[l])):
         furo = placa[l][c]
-        raio = Ray(Point(p_obs[0], p_obs[1], p_obs[2]), furo)
-        min_t = 999999999999
+        raio = Ray(Point(p_obs[0], p_obs[1], p_obs[2]), furo.coords() - obs_array)
+        min_t = 999999
         primeiro_obj = None
-
         for obj in objects:
             intersecoes = obj.intersection_with(raio)
             for t in intersecoes:
@@ -120,14 +111,53 @@ for l in range(len(placa)):
                 if t < min_t:
                     min_t = t
                     primeiro_obj = obj
+                # CASO SEJA NECESSARIO MUDAR ALGUM ATRIBUTO DO OBJETO ATINGIDO, USAR O primeir_obj
+            if primeiro_obj:
+                tela.set_simbolo_furo(l, c, primeiro_obj.cor)
+            #print(f" l = {l} c= {c} , min_t = {min_t}")
+            #print("\n")
+# pintar tela
+tela.show()
+"""
+# lista_colisoes: List[List[Union[Union[Point, Union[Cube, Cone, Cillinder], Point, float], Any]]]
+tela: List[List[Point, str, Point]]
+# furo: Point
+# obj: Union[Cube, Cone, Cillinder]
+# t: float
+
+# Calcula lista de colisões com os objetos, qual o primeiro objeto e o t do ponto atingido
+lista_colisoes = []
+tela = Panel(6, tam_placa, tam_placa)
+count = 1
+for l in range(len(placa)):
+    for c in range(len(placa[l])):
+        furo = placa[l][c]
+        raio = Ray(Point(p_obs[0], p_obs[1], p_obs[2]), furo.coords())
+        min_t = 999999999999
+        primeiro_obj = None
+        for obj in objects:
+            # print(f"----------------------------------------------->{obj}")
+            intersecoes = obj.intersection_with(raio)
+            for t in intersecoes:
+                lista_colisoes.append([furo, obj, raio.ponto(t), t])
+                # print(f"tint  = {t}")
+                if t < min_t:
+                    # print(f"c = {count}")
+                    count = count + 1
+                    # print(f"min_t{min_t}")
+                    min_t = t
+                    # print(f"min_taf{min_t}")
+                    primeiro_obj = obj
 
         # CASO SEJA NECESSARIO MUDAR ALGUM ATRIBUTO DO OBJETO ATINGIDO, USAR O primeir_obj
         if primeiro_obj:
             tela.set_simbolo_furo(l, c, primeiro_obj.cor)
             tela.set_t_furo(l, c, raio.ponto(min_t))
+        print(f" l = {l} c= {c} , min_t = {min_t}")
 print("\n")
 # pintar tela
 tela.show()
+"""
 """
 ........................................................................................................
 ........................................................................................................

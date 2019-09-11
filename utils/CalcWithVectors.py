@@ -7,6 +7,7 @@ import numpy as np
 
 from geometricAttributes.Point import Point
 
+
 def produto_escalar(vetor1: object, vetor2: object):
     return np.dot(vetor1, vetor2)
 

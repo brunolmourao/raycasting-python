@@ -1,120 +1,118 @@
-"""A classe Cube define um CUBO.
-    Atributos
-    centro_base: Ponto
-        Um ponto com as coordenadas do centro da base
-    aresta: float
-        O tamanho da aresta do cubo
-    v_direcao: Vetor
-        Um vetor unitario que é a normal a base do cubo
-"""
-
-from geometricAttributes.Point import Point
-from geometricAttributes.Face import Face
-import utils.CalcWithVectors as calc
 import numpy as np
 from utils.Ray import Ray
+from geometricAttributes.Point import Point
+from geometricAttributes.Face import Face
+
+def validar_tint(p, p1, p2, p3):
+    p1p = p1 - p
+    p2p = p2 - p
+    p3p = p3 - p
+    v1v2 = np.cross(p1p, p2p)
+    v2v3 = np.cross(p2p, p3p)
+    v3v1 = np.cross(p3p, p1p)
+    if np.dot(v1v2, v2v3) > 0:
+        if np.dot(v1v2, v3v1) > 0:
+            return True
+    return False
 
 
 class Cube(object):
-    __lista_vertices = []
-    __lista_arestas = []
-    __lista_faces = []
-    __prop_obj_d = []
-    __prop_obj_s = []
 
-    # Método construtor do cubo , alocando todas as listas necessárias
     def __init__(self, centro_base, aresta, v_direcao):
-        self.calc_verticies(centro_base, aresta)
-        self.calc_arestas()
-        self.calc_faces()
+        self.__lista_vertices = self.calc_verticies(centro_base, aresta)
+        self.__lista_arestas = self.calc_arestas()
+        self.__lista_faces = self.calc_faces()
         self.v_direcao = v_direcao
+        self.cor = ""
 
-    # TODO: implementar a equação de interseção com a reta
-    # Pecorrer a lista de faces triangulares e usar o meto
+        # Calcular os vértices a partir das entradas e colocar na lista
 
     def intersection_with(self, reta):
         t = []
         for face in self.__lista_faces:
-            # Calcula os vetores que formam o plano
             f1 = face.p1.coords()
             f2 = face.p2.coords()
             f3 = face.p3.coords()
-            v1 = calc.diff(f1, f2)
-            v2 = calc.diff(f1, f3)
-            # Calcular o vetor n do plano
-            v3 = np.cross(v1, v2)
-            if np.linalg.norm(v3) != 0:
-                n = v3 / np.linalg.norm(v3)
-            else:
-                n = v3
+            v1 = f2 - f1
+            v2 = f3 - f1
+            N = np.cross(v1, v2)
+            n = N / np.linalg.norm(N)
             p0 = reta.p.coords()
-            v_direcao = reta.v_direcao.coords()
-            if calc.produto_escalar(v_direcao, n) != 0:
-                tint = calc.produto_escalar(v1 - p0, n) / calc.produto_escalar(v_direcao, n)
-
+            d = reta.v_direcao
+            if np.dot(d, n) != 0:
+                tint = np.dot(f1 - p0, n) / np.dot(d, n)
                 p = reta.ponto(tint)
-                print(p)
-                val = calc.validar_faces_triangulares(p.coords(), f1, f2, f3)
-                if val:
+                if validar_tint(p.coords(), f1, f2, f3):
                     t.append(tint)
         return t
 
-    # Calcular os vértices a partir das entradas e colocar na lista
     def calc_verticies(self, centro_base, aresta):
+        vertices = []
         base_top_y = centro_base.y + aresta
         base_top = Point(centro_base.x, base_top_y, centro_base.z)  # ponto central da base superior
         # base_top.print_ponto()
         v1 = Point(centro_base.x + (aresta / 2), centro_base.y, centro_base.z + (aresta / 2))
-        v2 = Point(centro_base.x - (aresta / 2), centro_base.y, centro_base.z - (aresta / 2))
-        v3 = Point(centro_base.x + (aresta / 2), centro_base.y, centro_base.z - (aresta / 2))
+        v2 = Point(centro_base.x + (aresta / 2), centro_base.y, centro_base.z - (aresta / 2))
+        v3 = Point(centro_base.x - (aresta / 2), centro_base.y, centro_base.z - (aresta / 2))
         v4 = Point(centro_base.x - (aresta / 2), centro_base.y, centro_base.z + (aresta / 2))
         v5 = Point(base_top.x + (aresta / 2), base_top.y, base_top.z + (aresta / 2))
-        v6 = Point(base_top.x - (aresta / 2), base_top.y, base_top.z - (aresta / 2))
-        v7 = Point(base_top.x + (aresta / 2), base_top.y, base_top.z - (aresta / 2))
+        v6 = Point(base_top.x + (aresta / 2), base_top.y, base_top.z - (aresta / 2))
+        v7 = Point(base_top.x - (aresta / 2), base_top.y, base_top.z - (aresta / 2))
         v8 = Point(base_top.x - (aresta / 2), base_top.y, base_top.z + (aresta / 2))
-        self.__lista_vertices.append([0, v1])  # lista com íd e o vérticie correspondente
-        self.__lista_vertices.append([1, v2])
-        self.__lista_vertices.append([2, v3])
-        self.__lista_vertices.append([3, v4])
-        self.__lista_vertices.append([4, v5])
-        self.__lista_vertices.append([5, v6])
-        self.__lista_vertices.append([6, v7])
-        self.__lista_vertices.append([7, v8])
+        vertices.append([0, v1])  # lista com íd e o vérticie correspondente
+        vertices.append([1, v2])
+        vertices.append([2, v3])
+        vertices.append([3, v4])
+        vertices.append([4, v5])
+        vertices.append([5, v6])
+        vertices.append([6, v7])
+        vertices.append([7, v8])
+        return vertices
 
     # Calcular Arestas a partir dos vérticies
     def calc_arestas(self):
+        arestas = []
         lista_v = self.__lista_vertices
         # Arestas da Base
-        self.__lista_arestas.append([1, lista_v[0][1], lista_v[2][1]])  # lista com id, vértice 1 e verticie 2
-        self.__lista_arestas.append([2, lista_v[0][1], lista_v[3][1]])
-        self.__lista_arestas.append([3, lista_v[3][1], lista_v[1][1]])
-        self.__lista_arestas.append([4, lista_v[1][1], lista_v[2][1]])
+        arestas.append([1, lista_v[0][1], lista_v[2][1]])  # lista com id, vértice 1 e verticie 2
+        arestas.append([2, lista_v[0][1], lista_v[3][1]])
+        arestas.append([3, lista_v[3][1], lista_v[1][1]])
+        arestas.append([4, lista_v[1][1], lista_v[2][1]])
         # Arestas entre as bases
-        self.__lista_arestas.append([5, lista_v[0][1], lista_v[4][1]])
-        self.__lista_arestas.append([6, lista_v[3][1], lista_v[7][1]])
-        self.__lista_arestas.append([7, lista_v[1][1], lista_v[5][1]])
-        self.__lista_arestas.append([8, lista_v[2][1], lista_v[6][1]])
+        arestas.append([5, lista_v[0][1], lista_v[4][1]])
+        arestas.append([6, lista_v[3][1], lista_v[7][1]])
+        arestas.append([7, lista_v[1][1], lista_v[5][1]])
+        arestas.append([8, lista_v[2][1], lista_v[6][1]])
         # Arestas da Base Superior
-        self.__lista_arestas.append([9, lista_v[4][1], lista_v[6][1]])
-        self.__lista_arestas.append([10, lista_v[4][1], lista_v[7][1]])
-        self.__lista_arestas.append([11, lista_v[7][1], lista_v[5][1]])
-        self.__lista_arestas.append([12, lista_v[5][1], lista_v[6][1]])
+        arestas.append([9, lista_v[4][1], lista_v[6][1]])
+        arestas.append([10, lista_v[4][1], lista_v[7][1]])
+        arestas.append([11, lista_v[7][1], lista_v[5][1]])
+        arestas.append([12, lista_v[5][1], lista_v[6][1]])
+        return arestas
 
-    # Calcular Faces Triangulares a partir dos Veérticies
+    # Calcular Faces Triangulares a partir dos Vérticies
     def calc_faces(self):
+        faces = []
         lista_v = self.__lista_vertices
         # Faces Triangulares da Base
-        self.__lista_faces.append(Face(lista_v[0][1], lista_v[1][1], lista_v[3][1]))
-        self.__lista_faces.append(Face(lista_v[0][1], lista_v[1][1], lista_v[2][1]))
+        faces.append(Face(lista_v[0][1], lista_v[3][1], lista_v[2][1], "032"))
+        faces.append(Face(lista_v[0][1], lista_v[2][1], lista_v[1][1], "021"))
         # Faces Triangulares das faces laterais
-        self.__lista_faces.append(Face(lista_v[0][1], lista_v[3][1], lista_v[7][1]))
-        self.__lista_faces.append(Face(lista_v[0][1], lista_v[4][1], lista_v[7][1]))
-        self.__lista_faces.append(Face(lista_v[0][1], lista_v[2][1], lista_v[4][1]))
-        self.__lista_faces.append(Face(lista_v[6][1], lista_v[2][1], lista_v[4][1]))
-        self.__lista_faces.append(Face(lista_v[1][1], lista_v[2][1], lista_v[5][1]))
-        self.__lista_faces.append(Face(lista_v[2][1], lista_v[5][1], lista_v[6][1]))
-        self.__lista_faces.append(Face(lista_v[1][1], lista_v[3][1], lista_v[7][1]))
-        self.__lista_faces.append(Face(lista_v[1][1], lista_v[4][1], lista_v[7][1]))
+        faces.append(Face(lista_v[1][1], lista_v[4][1], lista_v[0][1], "140"))
+        faces.append(Face(lista_v[1][1], lista_v[5][1], lista_v[4][1], "154"))
+
+        faces.append(Face(lista_v[2][1], lista_v[5][1], lista_v[1][1], "251"))
+        faces.append(Face(lista_v[2][1], lista_v[6][1], lista_v[5][1], "265"))
+
+        faces.append(Face(lista_v[3][1], lista_v[6][1], lista_v[2][1], "362"))
+        faces.append(Face(lista_v[3][1], lista_v[7][1], lista_v[6][1], "376"))
+
+        faces.append(Face(lista_v[0][1], lista_v[4][1], lista_v[7][1], "047"))
+        faces.append(Face(lista_v[0][1], lista_v[7][1], lista_v[3][1], "073"))
         # Faces Triangulares da Base Superior
-        self.__lista_faces.append(Face(lista_v[4][1], lista_v[5][1], lista_v[7][1]))
-        self.__lista_faces.append(Face(lista_v[4][1], lista_v[5][1], lista_v[6][1]))
+        faces.append(Face(lista_v[4][1], lista_v[5][1], lista_v[6][1], "456"))
+        faces.append(Face(lista_v[4][1], lista_v[6][1], lista_v[7][1], "467"))
+        return faces
+
+    def set_cor(self, cor):
+        self.cor = cor
