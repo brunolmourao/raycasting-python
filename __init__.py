@@ -72,7 +72,7 @@ def search(lista, valor):
 
 
 # Coordenadas para camera e placa
-tam_placa = 18
+tam_placa = 60
 p_obs = [0, 0, 0]
 p_look_at = [0, 0, -4]
 camera = camera_init(p_obs, p_look_at)
@@ -80,20 +80,21 @@ placa = painel_init(4, tam_placa, tam_placa)
 
 # Cenário
 objects = []
-cube1 = Cube(Point(0, -2, -20), 6, Point(0, 1, 0))
+cube1 = Cube(Point(0, -2, -20), 4, Point(0, 1, 0))
 cube1.set_cor('1')
 # print(f" teste {cube1.intersection_with(Ray(Point(0,0,0),Point(3,-2,-17)))}")
 cube2 = Cube(Point(0, 4, -20), 6, Point(0, 1, 0))
 cube2.set_cor('2')
 # cube2 = Cube(calc.transform_camera(camera, Point(0, 4, -20)), 6, calc.transform_camera(camera, Point(0, 1,
 # 0))) cube2.set_cor('2') cube3 = Cube(calc.transform_camera(camera, Point(0, 10, -20)), 6, calc.transform_camera(
-# camera, Point(0, 1, 0))) cube3.set_cor('3') cone = Cone(calc.transform_camera(camera, Point(0, 0, -10)), 3, 8,
-# calc.transform_camera(camera, Point(0, 1, 0))) cilindro = Cillinder(calc.transform_camera(camera, Point(0, -2,
+# camera, Point(0, 1, 0))) cube3.set_cor('3')
+cone = Cone(Point(0, 0, -10), 3, 8, Point(0, 1, 0))
+# cilindro = Cillinder(calc.transform_camera(camera, Point(0, -2,
 # -10)), 0.5, 2, calc.transform_camera(camera, Point(0, 1, 0)))
-objects.append(cube1)
-objects.append(cube2)
+# objects.append(cube1)
+# objects.append(cube2)
 # objects.append(cube3)
-# objects.append(cone)
+objects.append(cone)
 # objects.append(cilindro)
 obs_array = np.array(p_obs)
 lista_colisoes = []
@@ -114,8 +115,8 @@ for l in range(len(placa)):
                 # CASO SEJA NECESSARIO MUDAR ALGUM ATRIBUTO DO OBJETO ATINGIDO, USAR O primeir_obj
             if primeiro_obj:
                 tela.set_simbolo_furo(l, c, primeiro_obj.cor)
-            #print(f" l = {l} c= {c} , min_t = {min_t}")
-            #print("\n")
+            # print(f" l = {l} c= {c} , min_t = {min_t}")
+            # print("\n")
 # pintar tela
 tela.show()
 """
