@@ -24,15 +24,37 @@ class Cillinder:
         self.cor = ""
 
     def intersection_with(self, reta):
-        w = self.__calc_coefficients__(reta.v_normal)
-        v = self.__calc_coefficients__(reta.p - self.__centro_base)
-        a = produto_escalar(w, w)
-        b = produto_escalar(v, w)
-        c = produto_escalar(v, v) - self.__raio * self.__raio
-        return roots(a, b, c)
+        pb = reta.p.coords() - self.__centro_base
+        d = reta.v_direcao
+        w = self.calc_coefficien(d)
+        v = self.calc_coefficien(pb)
 
-    def __calc_coefficients__(self, coe):
-        return coe - produto_escalar(produto_escalar(coe, self.__v_direcao), self.__v_direcao)
+        a = produto_escalar(w, w)
+        b = 2 * produto_escalar(v, w)
+        c = produto_escalar(v, v) - self.__raio * self.__raio
+        tint = roots(a, b, c)
+
+        # TODO corrigir comportamento da validação
+        # print(f" tint: {len(tint)}", end=" ")
+        # if len(tint) == 0:
+        #    print("")
+        index = 0
+        for x in tint:
+            #    print(f"tintA: {tint}", end=" ")
+            p0b = reta.ponto(x).coords() - self.centro_base
+            u = self.v_direcao
+            if (produto_escalar(p0b, u) >= 0) and (produto_escalar(p0b, u) <= self.altura):
+                index = index + 1
+            #        print("DONT REMOVE", end=" ")
+            else:
+                tint.pop(index)
+                index = index + 1
+        #       print("REMOVE", end=" ")
+        #   print(f"tintD: {tint}")
+        return tint
+
+    def calc_coefficien(self, coe):
+        return coe - produto_escalar(coe, self.v_direcao) * self.v_direcao
 
     # Método getters
     @property

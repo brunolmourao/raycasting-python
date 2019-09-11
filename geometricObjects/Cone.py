@@ -28,7 +28,6 @@ class Cone:
         self.__raio = raio
         self.cor = ""
 
-    # TODO método não ok
     def intersection_with(self, reta):
         p_raio = self.__centro_base + self.__raio * np.array([1, 0, 0])
         geratriz = self.__vertice - p_raio
@@ -37,20 +36,28 @@ class Cone:
         n = self.v_direcao / np.linalg.norm(self.v_direcao)
         a = np.power(produto_escalar(reta.v_direcao, n), 2) - \
             produto_escalar(reta.v_direcao, reta.v_direcao) * np.power(cos_theta, 2)
-        b = produto_escalar(v, reta.v_direcao) * np.power(cos_theta, 2) - produto_escalar(v, n) * produto_escalar(
-            reta.v_direcao, n)
+        b = 2 * (produto_escalar(v, reta.v_direcao) * np.power(cos_theta, 2) - produto_escalar(v, n) * produto_escalar(
+            reta.v_direcao, n))
         c = np.power(produto_escalar(v, n), 2) - produto_escalar(v, v) * np.power(cos_theta, 2)
         tint = roots(a, b, c)
 
+        # TODO corrigir comportamento da validação
+        print(f" tint: {len(tint)}", end=" ")
+        if len(tint) == 0:
+            print("")
         index = 0
         for x in tint:
+            print(f"tintA: {tint} x:{x} index: {index} ", end=" ")
             p = reta.ponto(x)
             k = self.vertice - p.coords()
             if (produto_escalar(k, n) >= 0) and (produto_escalar(k, n) <= self.altura):
                 index = index + 1
+                print("DONT REMOVE", end=" ")
             else:
                 tint.pop(index)
-                index = index + 1
+                # tint.pop(index)
+                print("REMOVE", end=" ")
+            print(f"tintD: {tint}")
         return tint
 
     # Método getters
