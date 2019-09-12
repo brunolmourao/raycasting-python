@@ -51,7 +51,7 @@ class Cone:
                 tint.append(x)
                 #print("DONT REMOVE", end=" ")
             #print(f"tintD: {tint}")
-        print(f"Roots {root}, tint = {tint}")
+        #print(f"Roots {root}, tint = {tint}")
         return tint
 
     # Método getters

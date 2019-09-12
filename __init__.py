@@ -6,7 +6,7 @@ import sys
 from typing import List
 
 import numpy as np
-
+from tkinter import *
 import utils.CalcWithVectors as calc
 import utils.constant as constant
 from geometricAttributes.Point import Point
@@ -64,7 +64,7 @@ def camera_init(obs, lookat):
 
 # Coordenadas para camera, placa e tela
 num_furos = 60
-tamanho = 6
+tamanho = 18
 viewer = np.array([0, 0, 0])
 look_at = np.array([0, 0, -4])
 
@@ -85,17 +85,17 @@ cone.set_cor('A')
 cilindro = Cillinder(Point(0, -2, -10), 0.5, 2, Point(0, 1, 0))
 cilindro.set_cor('T')
 
-#objects.append(cube1)
-#objects.append(cube2)
-#objects.append(cube3)
-objects.append(cone)
-objects.append(cilindro)
+objects.append(cube1)
+objects.append(cube2)
+objects.append(cube3)
+# objects.append(cone)
+# objects.append(cilindro)
 
 lista_colisoes = []
 for l in range(len(placa)):
-    #print("\n")
+    # print("\n")
     for c in range(len(placa[l])):
-       # print(f"[{l}][{c}]: ", end=" ")
+        # print(f"[{l}][{c}]: ", end=" ")
         furo = placa[l][c]
         raio = Ray(Point(viewer[0], viewer[1], viewer[2]), furo.coords() - viewer)
         min_t = 999999
@@ -111,7 +111,30 @@ for l in range(len(placa)):
             if primeiro_obj:
                 tela.set_simbolo_furo(l, c, primeiro_obj.cor)
 # pintar tela
-tela.show()
+
+root = Tk()
+root.geometry("60x60")
+c = Canvas(root, height=60, width=60, bg="blue")
+
+for lin in range(len(tela.p)):
+    for col in range(len(tela.p[lin])):
+        # print(" [", lin, col, "]", self.__p[lin][col][1], end="")
+        if tela.p[lin][col][1] == 'A':
+            c.create_line(lin, col, lin + 1, col, fill="green")
+        if tela.p[lin][col][1] == 'T':
+            c.create_line(lin, col, lin + 1, col,  fill="brown")
+        if tela.p[lin][col][1] == '1':
+            c.create_line(lin, col, lin + 1, col, fill="red")
+        if tela.p[lin][col][1] == '2':
+            c.create_line(lin, col, lin + 1, col, fill="black")
+        if tela.p[lin][col][1] == '3':
+            c.create_line(lin, col, lin + 1, col,  fill="white")
+        # c.create_line(lin, col, lin, col, width=200, fill="brown")
+        print(tela.p[lin][col][1], end="")
+    print()
+c.pack()
+root.mainloop()
+# tela.show()
 """
 # Calcula lista de colisões com os objetos, qual o primeiro objeto e o t do ponto atingido
 lista_colisoes = []
