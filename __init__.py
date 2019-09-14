@@ -15,6 +15,7 @@ from geometricObjects.Cone import Cone
 from geometricObjects.Cube import Cube
 from utils.Panel import Panel
 from utils.Ray import Ray
+from light.Lighting import *
 
 sys.setrecursionlimit(constant.RECURSION_LIMIT)
 
@@ -63,7 +64,7 @@ def camera_init(obs, lookat):
 
 
 def transform_camera(matrix, ponto):
-    #ponto1 = np.array([ponto.x, ponto.y, ponto.z])
+    # ponto1 = np.array([ponto.x, ponto.y, ponto.z])
     ponto1 = np.append(ponto, [1])
     produto = np.dot(matrix, ponto1)
     # print(produto.item(0), produto.item(1), produto.item(2))
@@ -71,7 +72,7 @@ def transform_camera(matrix, ponto):
 
 
 # Coordenadas para camera, placa e tela
-num_furos = 100
+num_furos = 60
 tamanho = 60
 viewer = np.array([0, 20, 0])
 look_at = np.array([0, 10, -20])
@@ -81,13 +82,16 @@ placa = painel_init(tamanho, num_furos, num_furos)
 tela = Panel(tamanho, num_furos, num_furos)
 # Cenário
 objects = []
-cube1 = Cube(transform_camera(camera, np.array([0, -2, -20])), 6, transform_camera(camera, np.array([0, 1, 0])))
+cube1 = Cube(transform_camera(camera, np.array([0, -2, -20])), 6, transform_camera(camera, np.array([0, 1, 0])),
+             [0, 1, 1], [0, 0, 0])
 # cube1 = Cube(Point(0, -2, -20), 6, Point(0, 1, 0))
 cube1.set_cor('1')
-cube2 = Cube(transform_camera(camera, np.array([0, 4, -20])), 6, transform_camera(camera, np.array([0, 1, 0])))
+cube2 = Cube(transform_camera(camera, np.array([0, 4, -20])), 6, transform_camera(camera, np.array([0, 1, 0])),
+             [0, 1, 0], [0, 0, 0])
 # cube2 = Cube(Point(0, 4, -20), 6, Point(0, 1, 0))
 cube2.set_cor('2')
-cube3 = Cube(transform_camera(camera, np.array([0, 10, -20])), 6, transform_camera(camera, np.array([0, 1, 0])))
+cube3 = Cube(transform_camera(camera, np.array([0, 10, -20])), 6, transform_camera(camera, np.array([0, 1, 0])),
+             [0, 1, 1], [1, 0.5, 0.6])
 # cube3 = Cube(Point(0, 10, -20), 6, Point(0, 1, 0))
 cube3.set_cor('3')
 cone = Cone(Point(0, 0, -10), 2, 5, Point(0, 1, 0))
@@ -100,7 +104,7 @@ objects.append(cube2)
 objects.append(cube3)
 # objects.append(cone)
 # objects.append(cilindro)
-
+viewer = transform_camera(camera, viewer).coords()
 lista_colisoes = []
 for l in range(len(placa)):
     # print("\n")

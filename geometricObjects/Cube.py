@@ -17,14 +17,25 @@ def validar_tint(p, p1, p2, p3):
     return False
 
 
+# Calcula a normal a face triangular
+def calc_normal(f1, f2, f3):
+    v1 = f2 - f1
+    v2 = f3 - f1
+    N = np.cross(v1, v2)
+    n = N / np.linalg.norm(N)
+    return n
+
+
 class Cube(object):
 
-    def __init__(self, centro_base, aresta, v_direcao):
+    def __init__(self, centro_base, aresta, v_direcao, prop_dif, prop_sp):
         self.__lista_vertices = self.calc_verticies(centro_base, aresta)
         self.__lista_arestas = self.calc_arestas()
         self.__lista_faces = self.calc_faces()
         self.v_direcao = v_direcao
         self.cor = ""
+        self.prop_dif = prop_dif
+        self.prop_sp = prop_sp
 
     def intersection_with(self, reta):
         t = []
@@ -32,10 +43,7 @@ class Cube(object):
             f1 = face.p1.coords()
             f2 = face.p2.coords()
             f3 = face.p3.coords()
-            v1 = f2 - f1
-            v2 = f3 - f1
-            N = np.cross(v1, v2)
-            n = N / np.linalg.norm(N)
+            n = calc_normal(f1, f2, f3)
             p0 = reta.p.coords()
             d = reta.v_direcao
             if np.dot(d, n) != 0:
