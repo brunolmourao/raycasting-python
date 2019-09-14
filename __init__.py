@@ -62,23 +62,33 @@ def camera_init(obs, lookat):
     return cam
 
 
+def transform_camera(matrix, ponto):
+    #ponto1 = np.array([ponto.x, ponto.y, ponto.z])
+    ponto1 = np.append(ponto, [1])
+    produto = np.dot(matrix, ponto1)
+    # print(produto.item(0), produto.item(1), produto.item(2))
+    return Point(produto.item(0), produto.item(1), produto.item(2))
+
+
 # Coordenadas para camera, placa e tela
-num_furos = 60
-tamanho = 18
-viewer = np.array([0, 0, 0])
-look_at = np.array([0, 0, -4])
+num_furos = 100
+tamanho = 60
+viewer = np.array([0, 20, 0])
+look_at = np.array([0, 10, -20])
 
 camera = camera_init(viewer, look_at)
 placa = painel_init(tamanho, num_furos, num_furos)
 tela = Panel(tamanho, num_furos, num_furos)
-
 # Cenário
 objects = []
-cube1 = Cube(Point(0, -2, -20), 6, Point(0, 1, 0))
+cube1 = Cube(transform_camera(camera, np.array([0, -2, -20])), 6, transform_camera(camera, np.array([0, 1, 0])))
+# cube1 = Cube(Point(0, -2, -20), 6, Point(0, 1, 0))
 cube1.set_cor('1')
-cube2 = Cube(Point(0, 4, -20), 6, Point(0, 1, 0))
+cube2 = Cube(transform_camera(camera, np.array([0, 4, -20])), 6, transform_camera(camera, np.array([0, 1, 0])))
+# cube2 = Cube(Point(0, 4, -20), 6, Point(0, 1, 0))
 cube2.set_cor('2')
-cube3 = Cube(Point(0, 10, -20), 6, Point(0, 1, 0))
+cube3 = Cube(transform_camera(camera, np.array([0, 10, -20])), 6, transform_camera(camera, np.array([0, 1, 0])))
+# cube3 = Cube(Point(0, 10, -20), 6, Point(0, 1, 0))
 cube3.set_cor('3')
 cone = Cone(Point(0, 0, -10), 2, 5, Point(0, 1, 0))
 cone.set_cor('A')
@@ -113,22 +123,22 @@ for l in range(len(placa)):
 # pintar tela
 
 root = Tk()
-root.geometry("60x60")
-c = Canvas(root, height=60, width=60, bg="blue")
+root.geometry("300x300")
+c = Canvas(root, height=300, width=300, bg="blue")
 
 for lin in range(len(tela.p)):
     for col in range(len(tela.p[lin])):
         # print(" [", lin, col, "]", self.__p[lin][col][1], end="")
         if tela.p[lin][col][1] == 'A':
-            c.create_line(lin, col, lin + 1, col, fill="green")
+            c.create_line(col, lin, col + 1, lin, fill="green")
         if tela.p[lin][col][1] == 'T':
-            c.create_line(lin, col, lin + 1, col,  fill="brown")
+            c.create_line(col, lin, col + 1, lin, fill="brown")
         if tela.p[lin][col][1] == '1':
-            c.create_line(lin, col, lin + 1, col, fill="red")
+            c.create_line(col, lin, col + 1, lin, fill="red")
         if tela.p[lin][col][1] == '2':
-            c.create_line(lin, col, lin + 1, col, fill="black")
+            c.create_line(col, lin, col + 1, lin, fill="black")
         if tela.p[lin][col][1] == '3':
-            c.create_line(lin, col, lin + 1, col,  fill="white")
+            c.create_line(col, lin, col + 1, lin, fill="white")
         # c.create_line(lin, col, lin, col, width=200, fill="brown")
         print(tela.p[lin][col][1], end="")
     print()
