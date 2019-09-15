@@ -43,13 +43,12 @@ def painel_init(tam, num_lin, num_col):
     return p
 
 
-def camera_init(obs, lookat):
-    K = obs - lookat
-    k = calc.normalizar(K)
-    vup = np.array([0, 10, -4])
-    V = vup - obs
-    I = calc.produto_vetorial(V, k)
-    i = calc.normalizar(I)
+def camera_init(obs, lookat, vup):
+    kg = obs - lookat
+    k = kg / np.linalg.norm(kg)
+    vg = vup - obs
+    ig = calc.produto_vetorial(vg, k)
+    i = ig / np.linalg.norm(ig)
     j = calc.produto_vetorial(k, i)
     i = np.append(i, [0])
     j = np.append(j, [0])
@@ -74,10 +73,11 @@ def transform_camera(matrix, ponto):
 # Coordenadas para camera, placa e tela
 num_furos = 60
 tamanho = 60
-viewer = np.array([0, 20, 0])
+viewer = np.array([0, 20, -20])
 look_at = np.array([0, 10, -20])
+v_up = np.array([0, 40, -10])
 
-camera = camera_init(viewer, look_at)
+camera = camera_init(viewer, look_at, v_up)
 placa = painel_init(tamanho, num_furos, num_furos)
 tela = Panel(tamanho, num_furos, num_furos)
 # Cenário
@@ -117,7 +117,10 @@ for l in range(len(placa)):
         for obj in objects:
             intersecoes = obj.intersection_with(raio)
             for t in intersecoes:
-                lista_colisoes.append([furo, obj, raio.ponto(t), t])
+                # lista_colisoes.append([furo, obj, raio.ponto(t), t])
+                print(f"t = {t}")
+                print(f"tmin = {min_t}")
+                print(f"cor = {obj.cor}")
                 if t < min_t:
                     min_t = t
                     primeiro_obj = obj
@@ -143,12 +146,10 @@ for lin in range(len(tela.p)):
             c.create_line(col, lin, col + 1, lin, fill="black")
         if tela.p[lin][col][1] == '3':
             c.create_line(col, lin, col + 1, lin, fill="white")
-        # c.create_line(lin, col, lin, col, width=200, fill="brown")
         print(tela.p[lin][col][1], end="")
     print()
 c.pack()
 root.mainloop()
-# tela.show()
 """
 # Calcula lista de colisões com os objetos, qual o primeiro objeto e o t do ponto atingido
 lista_colisoes = []
