@@ -30,15 +30,16 @@ class Scale:
 class Rotation:
     # Aplica a rotação de um ponto em um determinado ângulo theta
     def __init__(self, theta):
-        self.__theta = theta
+        self.__sin_theta = np.sin(np.deg2rad(theta))
+        self.__cos_theta = np.cos(np.deg2rad(theta))
 
     # Calcula o ponto após a rotação em torno do eixo x
     def rotacionar_x(self, point):
         result = []
 
         x = point[0]
-        y = point[1] * np.cos(np.deg2rad(self.__theta)) - point[2] * np.sin(np.deg2rad(self.__theta))
-        z = point[1] * np.sin(np.deg2rad(self.__theta)) + point[2] * np.cos(np.deg2rad(self.__theta))
+        y = point[1] * self.__cos_theta - point[2] * self.__sin_theta
+        z = point[1] * self.__sin_theta + point[2] * self.__cos_theta
 
         result.append(x)
         result.append(y)
@@ -50,9 +51,9 @@ class Rotation:
     def rotacionar_y(self, point):
         result = []
 
-        x = point[0] * np.cos(np.deg2rad(self.__theta)) + point[2] * np.sin(np.deg2rad(self.__theta))
+        x = point[0] * self.__cos_theta + point[2] * self.__sin_theta
         y = point[1]
-        z = point[2] * np.cos(np.deg2rad(self.__theta)) - point[0] * np.sin(np.deg2rad(self.__theta))
+        z = point[2] * self.__cos_theta - point[0] * self.__sin_theta
 
         result.append(x)
         result.append(y)
@@ -64,8 +65,8 @@ class Rotation:
     def rotacionar_z(self, point):
         result = []
 
-        x = point[0] * np.cos(np.deg2rad(self.__theta)) - point[1] * np.sin(np.deg2rad(self.__theta))
-        y = point[0] * np.sin(np.deg2rad(self.__theta)) + point[1] * np.cos(np.deg2rad(self.__theta))
+        x = point[0] * self.__cos_theta - point[1] * self.__sin_theta
+        y = point[0] * self.__sin_theta + point[1] * self.__cos_theta
         z = point[2]
 
         result.append(x)
