@@ -2,6 +2,7 @@ from typing import List, Union
 import numpy as np
 from geometricAttributes.Point import Point
 from utils import constant
+from utils.Transform import transform_to_camera
 from utils.constant import POSICAO_PLACA_Z
 
 
@@ -45,8 +46,9 @@ class Panel:
             print()
 
     def transform_to_camera(self, camera):
-        # TODO implementar
-        pass
+        # TODO testar
+        for p in self.p:
+            p = transform_to_camera(camera, p)
 
 class Tela(Panel):
     def __init__(self, tam, num_lin, num_col):
@@ -70,8 +72,9 @@ class Tela(Panel):
             self.__p.append(p_linha)
 
     def transform_to_camera(self, camera):
-        # TODO implementar
-        pass
+        # TODO testar
+        for p in self.p:
+            p[0] = transform_to_camera(camera, p[0])
 
     def show(self):
         for lin in range(len(self.__p)):
@@ -90,4 +93,7 @@ class Tela(Panel):
     def set_cor(self, l, c, valor, t, f_luz):
         cor = np.array([])
         # TODO Calcular a iluminação no ponto t
+        cor = f_luz[0].iluminar
+        for f in f_luz:
+            cor = cor + f.iluminar_dif() + f.iluminar_sp()
         self.__p[l][c][1] = cor

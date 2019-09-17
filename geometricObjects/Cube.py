@@ -2,6 +2,7 @@ import numpy as np
 
 from geometricAttributes.Face import Face
 from geometricAttributes.Point import Point
+from utils.Transform import transform_to_camera
 
 
 def validar_tint(p, p1, p2, p3):
@@ -34,6 +35,7 @@ class Cube(object):
         self.__lista_faces = self.calc_faces()
         self.v_direcao = v_direcao
         self.cor = ""
+        self.material
         self.m = None
         self.prop_dif = prop_dif
         self.prop_sp = prop_sp
@@ -54,7 +56,8 @@ class Cube(object):
                     t.append(tint)
         return t
 
-    def calc_verticies(self, centro_base, aresta):
+    @staticmethod
+    def calc_verticies(centro_base, aresta):
         vertices = []
         v1 = Point(centro_base.x + (aresta / 2), centro_base.y, centro_base.z + (aresta / 2))
         v2 = Point(centro_base.x + (aresta / 2), centro_base.y, centro_base.z - (aresta / 2))
@@ -124,5 +127,8 @@ class Cube(object):
         self.cor = cor
 
     def transform_to_camera(self, camera):
-        # TODO implementar
-        pass
+        # TODO testar
+        for v in self.__lista_vertices:
+            v = transform_to_camera(camera, v)
+        self.__lista_arestas = self.calc_arestas()
+        self.__lista_faces = self.calc_faces()
