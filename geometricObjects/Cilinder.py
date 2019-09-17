@@ -52,6 +52,10 @@ class Cillinder:
     def calc_coefficien(self, coe):
         return coe - produto_escalar(coe, self.v_direcao) * self.v_direcao
 
+    def transform_to_camera(self, camera):
+        # TODO implementar
+        pass
+
     # Método getters
     @property
     def centro_base(self):

@@ -54,6 +54,10 @@ class Cone:
         #print(f"Roots {root}, tint = {tint}")
         return tint
 
+    def transform_to_camera(self, camera):
+        # TODO implementar
+        pass
+
     # Método getters
     @property
     def vertice(self):

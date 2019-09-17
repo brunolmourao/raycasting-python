@@ -34,6 +34,7 @@ class Cube(object):
         self.__lista_faces = self.calc_faces()
         self.v_direcao = v_direcao
         self.cor = ""
+        self.m = None
         self.prop_dif = prop_dif
         self.prop_sp = prop_sp
 
@@ -121,3 +122,7 @@ class Cube(object):
 
     def set_cor(self, cor):
         self.cor = cor
+
+    def transform_to_camera(self, camera):
+        # TODO implementar
+        pass

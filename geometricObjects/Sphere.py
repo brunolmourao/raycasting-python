@@ -24,6 +24,10 @@ class Sphere:
         c = produto_escalar(reta.p - self.__centro, reta.p - self.__centro) - rq
         return roots(a, b, c)
 
+    def transform_to_camera(self, camera):
+        # TODO implementar
+        pass
+
     # Método getters
     @property
     def centro(self):
