@@ -3,11 +3,8 @@ Programa onde o loop principal irá executar
 """
 
 import sys
-from typing import List
 
-import numpy as np
 from tkinter import *
-import utils.CalcWithVectors as calc
 import utils.constant as constant
 from geometricAttributes.Point import Point
 from geometricObjects.Cilinder import Cillinder
