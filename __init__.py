@@ -77,10 +77,10 @@ objects.append(cube3)
 # FONTES LUMINOSAS =====================================================================================================
 # TODO Definir valores adequados para a iluminação
 fontesLuminosas = []
-light_amb = EnvironmentLight(np.array([0, 0, 0]))
-light_p1 = PointLight(np.array([0, 0, 0]))
-light_sp2 = SpotLight(np.array([0, 0, 0]))
-light_rmt3 = RemoteLight(np.array([0, 0, 0]))
+light_amb = EnvironmentLight([0, 0, 0])
+light_p1 = PointLight([0, 0, 0], np.array([1, 1, 1]))
+light_sp2 = SpotLight([0, 0, 0], np.array([1, 10, 1]), np.array([1, 1, 1]))
+light_rmt3 = RemoteLight([0, 0, 0], np.array([1, 1, 0]))
 
 fontesLuminosas.append(light_amb)
 fontesLuminosas.append(light_p1)
@@ -89,6 +89,7 @@ fontesLuminosas.append(light_rmt3)
 
 # MUDANÇA DE COORDENADAS MUNDO->CAM ====================================================================================
 # TODO Implemetar métodos transform_to_camera nos objetos, nas fonte luminosas, na placa e na tela
+"""
 for o in objects:
     o.transform_to_camera(camera)
 for f in fontesLuminosas:
@@ -96,16 +97,17 @@ for f in fontesLuminosas:
 viewer = transform_to_camera(camera, viewer).coords()
 placa.transform_to_camera(camera)
 tela.transform_to_camera(camera)
-
+"""
 # COLISÕES =============================================================================================================
 lista_colisoes = []
-# TODO Transformei a Placa num ojeto, não testei as mudanças
+# TODO Transformei a Placa num objeto, não testei as mudanças
 for l in range(len(placa.p)):
     # print("\n")
     for c in range(len(placa.p[l])):
         # print(f"[{l}][{c}]: ", end=" ")
         furo = placa.p[l][c]
-        raio = Ray(Point(viewer[0], viewer[1], viewer[2]), furo.coords() - viewer)
+        print(furo)
+        raio = Ray(Point(viewer[0], viewer[1], viewer[2]), furo - viewer)
         min_t = 999999
         primeiro_obj = None
         for obj in objects:

@@ -29,7 +29,6 @@ class Panel:
                 y_lc = tam / 2 - var * (1 + 2 * lin) / 2
                 p_linha.append(Point(x_lc, y_lc, constant.POSICAO_PLACA_Z))
             p.append(p_linha)
-        return p
 
     @property
     def p(self):
@@ -50,6 +49,7 @@ class Panel:
         for p in self.p:
             p = transform_to_camera(camera, p)
 
+
 class Tela(Panel):
     def __init__(self, tam, num_lin, num_col):
         """O centro do painel tem coordenada [0,0,z]
@@ -58,22 +58,22 @@ class Tela(Panel):
                                   |  .  |
                [-tam/2,-tam/2, z] |_____| [tam/2, -tam/2, z]
            """
+        super().__init__(tam, num_lin, num_col)
         if tam / num_lin >= tam / num_col:
             var = tam / num_col
         else:
             var = tam / num_lin
-
         for lin in range(num_lin):
             p_linha: List[List[Union[Point, str]]] = []
             for col in range(num_col):
                 x_lc = -tam / 2 + var * (1 + 2 * col) / 2
                 y_lc = tam / 2 - var * (1 + 2 * lin) / 2
                 p_linha.append([Point(x_lc, y_lc, POSICAO_PLACA_Z), '.'])
-            self.__p.append(p_linha)
+            super().p.append(p_linha)
 
     def transform_to_camera(self, camera):
         # TODO testar
-        for p in self.p:
+        for p in super().p:
             p[0] = transform_to_camera(camera, p[0])
 
     def show(self):

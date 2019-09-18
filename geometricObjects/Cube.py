@@ -35,7 +35,7 @@ class Cube(object):
         self.__lista_faces = self.calc_faces()
         self.v_direcao = v_direcao
         self.cor = ""
-        self.material
+        self.material = None
         self.m = None
         self.prop_dif = prop_dif
         self.prop_sp = prop_sp
