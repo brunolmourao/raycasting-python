@@ -36,17 +36,12 @@ class Cillinder:
         root = roots(a, b, c)
 
         # TODO corrigir comportamento da validação
-        # print(f" tint: {len(tint)}", end=" ")
-        # if len(tint) == 0:
-        #    print("")
         index = 0
         for x in root:
             p0b = reta.ponto(x).coords() - self.centro_base
             u = self.v_direcao
             if (produto_escalar(p0b, u) >= 0) and (produto_escalar(p0b, u) < self.altura):
-                print(f"x = {x}")
                 tint.append(x)
-            # print(f"Roots {root}, tint = {tint}")
         return root
 
     def calc_coefficien(self, coe):

@@ -120,18 +120,3 @@ class RemoteLight(Light):
     def transform_to_camera(self, camera):
         # TODO implementar
         pass
-
-
-"""
-luz1 = EnvironmentLight([0.5, 0.5, 1])
-luz2 = PointLight([0.5, 0.5, 1], np.array([1, 1, 1]))
-luz3 = SpotLight([0.5, 0.4, 0.8], np.array([2, 2, 0]), np.array([1, 1, 0]))
-luz4 = RemoteLight([0.5, 0.5, 0.8], np.array([0, 1, 0]))
-
-p_dif = [1, 1, 1]
-p_sp = [0, 0.5, 0.4]
-n = np.array([0, 1, 0])
-print(luz1.iluminar(p_dif))
-print(luz1.iluminar(p_sp))
-print(luz2.iluminar_dif(p_dif, n, np.array([2, 2, 2])))
-"""

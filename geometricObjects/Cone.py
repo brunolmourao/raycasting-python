@@ -42,16 +42,11 @@ class Cone:
         root = roots(a, b, c)
         tint = []
         # TODO corrigir comportamento da validação
-        #print(f" tint: {len(root)}", end=" ")
         for x in root:
-            #print(f"tintA: {root} x:{x} index: {index} ", end=" ")
             p = reta.ponto(x)
             k = self.vertice - p.coords()
             if (produto_escalar(k, n) >= 0) and (produto_escalar(k, n) <= self.altura):
                 tint.append(x)
-                #print("DONT REMOVE", end=" ")
-            #print(f"tintD: {tint}")
-        #print(f"Roots {root}, tint = {tint}")
         return tint
 
     def transform_to_camera(self, camera):

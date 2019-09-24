@@ -40,10 +40,11 @@ class Panel:
         self.__p[l][c][1] = valor
 
     def show(self):
+        i=0
         for lin in range(len(self.__p)):
             for col in range(len(self.__p[lin])):
-                # print(" [", lin, col, "]", self.__p[lin][col][1], end="")
-                print(self.p[lin][col][1], end="")
+                print(f"{i} {self.p[lin][col].coords()}", end="\n")
+                i = i+1
             print()
 
     def transform_to_camera(self, camera):
@@ -84,7 +85,6 @@ class Tela:
     def show(self):
         for lin in range(len(self.__p)):
             for col in range(len(self.__p[lin])):
-                # print(" [", lin, col, "]", self.__p[lin][col][1], end="")
                 print(self.p[lin][col][1], end="")
             print()
 

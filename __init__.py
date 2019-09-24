@@ -39,8 +39,8 @@ def camera_init(obs, lookat, vup):
 
 
 # Coordenadas para camera, placa e tela ================================================================================
-num_furos = 60  # número de furos por linha. Define a resolução da tela
-tamanho = 60  # medida da aresta da placa em unidades de coordenada
+num_furos = 10  # número de furos por linha. Define a resolução da tela
+tamanho = 6  # medida da aresta da placa em unidades de coordenada
 viewer = np.array([0, 0, 0])  # Coordeanadas do observador
 look_at = np.array([0, 0, -10])  # Ponto q define a direção da camera
 v_up = np.array([0, 10, -10])  # Ponto que define o plano sagital
@@ -52,10 +52,11 @@ tela = Tela(tamanho, num_furos, num_furos)
 material1 = Material(1, [0, 1, 1], [0, 0.5, 0.6], [0.6, 0.1, 0])
 
 # CENÁRIO ==============================================================================================================
+
 objects = []
+print(np.size(objects))
 # cube1 = Cube(transform_to_camera(camera, np.array([0, -2, -20])), 6, transform_to_camera(camera, np.array([0, 1, 0])),
 # material1)
-
 # cube2 = Cube(transform_to_camera(camera, np.array([0, 4, -20])), 6, transform_to_camera(camera, np.array([0, 1, 0])),
 # material1)
 # cube3 = Cube(transform_to_camera(camera, np.array([0, 10, -20])), 6, transform_to_camera(camera, np.array([0, 1, 0])),
@@ -67,10 +68,10 @@ cube2 = Cube(Point(0, 4, -20), 6, Point(0, 1, 0), material1)
 cube2.set_cor('2')
 cube3 = Cube(Point(0, 10, -20), 6, Point(0, 1, 0), material1)
 cube3.set_cor('3')
-# cone = Cone(Point(0, 0, -10), 2, 5, Point(0, 1, 0))
-# cone.set_cor('A')
-# cilindro = Cillinder(Point(0, -2, -10), 0.5, 2, Point(0, 1, 0))
-# cilindro.set_cor('T')
+cone = Cone(Point(0, 0, -10), 3, 8, Point(0, 1, 0))
+cone.set_cor('A')
+cilindro = Cillinder(Point(0, -2, -10), 0.5, 2, Point(0, 1, 0))
+cilindro.set_cor('T')
 
 objects.append(cube1)
 objects.append(cube2)
@@ -106,9 +107,7 @@ tela.transform_to_camera(camera)
 lista_colisoes = []
 # TODO Transformei a Placa num objeto, não testei as mudanças
 for l in range(len(placa.p)):
-    # print("\n")
     for c in range(len(placa.p[l])):
-        # print(f"[{l}][{c}]: ", end=" ")
         furo = placa.p[l][c]
         raio = Ray(Point(viewer[0], viewer[1], viewer[2]), furo.coords() - viewer)
         min_t = 999999
@@ -116,10 +115,6 @@ for l in range(len(placa.p)):
         for obj in objects:
             intersecoes = obj.intersection_with(raio)
             for t in intersecoes:
-                # lista_colisoes.append([furo, obj, raio.ponto(t), t])
-                print(f"t = {t}")
-                print(f"tmin = {min_t}")
-                print(f"cor = {obj.cor}")
                 if t < min_t:
                     min_t = t
                     primeiro_obj = obj
@@ -135,7 +130,6 @@ c = Canvas(root, height=300, width=300, bg="blue")
 
 for lin in range(len(tela.p)):
     for col in range(len(tela.p[lin])):
-        # print(" [", lin, col, "]", self.__p[lin][col][1], end="")
         if tela.p[lin][col][1] == 'A':
             c.create_line(col, lin, col + 1, lin, fill="green")
         if tela.p[lin][col][1] == 'T':
