@@ -4,6 +4,7 @@ from geometricAttributes.Point import Point
 from utils import constant
 from utils.Transform import transform_to_camera
 from utils.constant import POSICAO_PLACA_Z
+from light.Lighting import EnvironmentLight
 
 
 class Panel:
@@ -29,6 +30,7 @@ class Panel:
                 y_lc = tam / 2 - var * (1 + 2 * lin) / 2
                 p_linha.append(Point(x_lc, y_lc, constant.POSICAO_PLACA_Z))
             p.append(p_linha)
+        self.__p = p
 
     @property
     def p(self):
@@ -50,7 +52,9 @@ class Panel:
             p = transform_to_camera(camera, p)
 
 
-class Tela(Panel):
+class Tela:
+    __p = []
+
     def __init__(self, tam, num_lin, num_col):
         """O centro do painel tem coordenada [0,0,z]
                deste modo os vertices tem coord:
@@ -58,7 +62,7 @@ class Tela(Panel):
                                   |  .  |
                [-tam/2,-tam/2, z] |_____| [tam/2, -tam/2, z]
            """
-        super().__init__(tam, num_lin, num_col)
+        p = []
         if tam / num_lin >= tam / num_col:
             var = tam / num_col
         else:
@@ -69,11 +73,12 @@ class Tela(Panel):
                 x_lc = -tam / 2 + var * (1 + 2 * col) / 2
                 y_lc = tam / 2 - var * (1 + 2 * lin) / 2
                 p_linha.append([Point(x_lc, y_lc, POSICAO_PLACA_Z), '.'])
-            super().p.append(p_linha)
+                p.append(p_linha)
+        self.__p = p
 
     def transform_to_camera(self, camera):
         # TODO testar
-        for p in super().p:
+        for p in self.__p:
             p[0] = transform_to_camera(camera, p[0])
 
     def show(self):
@@ -90,10 +95,13 @@ class Tela(Panel):
     def set_simbolo_furo(self, l, c, valor):
         self.__p[l][c][1] = valor
 
-    def set_cor(self, l, c, valor, t, f_luz):
+    def set_cor(self, l, c, material, t, f_luz):
         cor = np.array([])
         # TODO Calcular a iluminação no ponto t
-        cor = f_luz[0].iluminar
+        # cor = f_luz[0].iluminar(material.ka())
         for f in f_luz:
-            cor = cor + f.iluminar_dif() + f.iluminar_sp()
+            if isinstance(f, EnvironmentLight):
+                cor = f_luz[0].iluminar(material.ka())
+            else:
+                cor = cor + f.iluminar_dif(material.kd()) + f.iluminar_sp(material.ks())
         self.__p[l][c][1] = cor

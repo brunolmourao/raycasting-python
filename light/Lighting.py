@@ -23,10 +23,6 @@ class EnvironmentLight(Light):
     def iluminar(self, prop_obj):
         return super().arroba(prop_obj)
 
-    def transform_to_camera(self, camera):
-        # TODO implementar
-        pass
-
 
 class PointLight(Light):
     # Onde ppnt é o Ponto de onde a luz pontual é gerada
@@ -93,6 +89,7 @@ class SpotLight(Light):
         # TODO implementar
         pass
 
+
 class RemoteLight(Light):
     def __init__(self, rgb, dr):
         super().__init__(rgb)
@@ -123,6 +120,7 @@ class RemoteLight(Light):
     def transform_to_camera(self, camera):
         # TODO implementar
         pass
+
 
 """
 luz1 = EnvironmentLight([0.5, 0.5, 1])

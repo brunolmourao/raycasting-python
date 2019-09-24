@@ -14,6 +14,7 @@ from utils.Panel import Panel, Tela
 from utils.Ray import Ray
 from light.Lighting import *
 from utils.Transform import transform_to_camera
+from materials.Material import Material
 
 sys.setrecursionlimit(constant.RECURSION_LIMIT)
 
@@ -40,33 +41,36 @@ def camera_init(obs, lookat, vup):
 # Coordenadas para camera, placa e tela ================================================================================
 num_furos = 60  # número de furos por linha. Define a resolução da tela
 tamanho = 60  # medida da aresta da placa em unidades de coordenada
-viewer = np.array([0, 20, -20])  # Coordeanadas do observador
-look_at = np.array([0, 10, -20])  # Ponto q define a direção da camera
-v_up = np.array([0, 40, -10])  # Ponto que define o plano sagital
+viewer = np.array([0, 0, 0])  # Coordeanadas do observador
+look_at = np.array([0, 0, -10])  # Ponto q define a direção da camera
+v_up = np.array([0, 10, -10])  # Ponto que define o plano sagital
 
 camera = camera_init(viewer, look_at, v_up)
 placa = Panel(tamanho, num_furos, num_furos)
 tela = Tela(tamanho, num_furos, num_furos)
 
+material1 = Material(1, [0, 1, 1], [0, 0.5, 0.6], [0.6, 0.1, 0])
+
 # CENÁRIO ==============================================================================================================
 objects = []
-cube1 = Cube(transform_to_camera(camera, np.array([0, -2, -20])), 6, transform_to_camera(camera, np.array([0, 1, 0])),
-             [0, 1, 1], [0, 0, 0])
-cube2 = Cube(transform_to_camera(camera, np.array([0, 4, -20])), 6, transform_to_camera(camera, np.array([0, 1, 0])),
-             [0, 1, 0], [0, 0, 0])
-cube3 = Cube(transform_to_camera(camera, np.array([0, 10, -20])), 6, transform_to_camera(camera, np.array([0, 1, 0])),
-             [0, 1, 1], [1, 0.5, 0.6])
+# cube1 = Cube(transform_to_camera(camera, np.array([0, -2, -20])), 6, transform_to_camera(camera, np.array([0, 1, 0])),
+# material1)
 
-# cube1 = Cube(Point(0, -2, -20), 6, Point(0, 1, 0))
+# cube2 = Cube(transform_to_camera(camera, np.array([0, 4, -20])), 6, transform_to_camera(camera, np.array([0, 1, 0])),
+# material1)
+# cube3 = Cube(transform_to_camera(camera, np.array([0, 10, -20])), 6, transform_to_camera(camera, np.array([0, 1, 0])),
+# material1)
+
+cube1 = Cube(Point(0, -2, -20), 6, Point(0, 1, 0), material1)
 cube1.set_cor('1')
-# cube2 = Cube(Point(0, 4, -20), 6, Point(0, 1, 0))
+cube2 = Cube(Point(0, 4, -20), 6, Point(0, 1, 0), material1)
 cube2.set_cor('2')
-# cube3 = Cube(Point(0, 10, -20), 6, Point(0, 1, 0))
+cube3 = Cube(Point(0, 10, -20), 6, Point(0, 1, 0), material1)
 cube3.set_cor('3')
-cone = Cone(Point(0, 0, -10), 2, 5, Point(0, 1, 0))
-cone.set_cor('A')
-cilindro = Cillinder(Point(0, -2, -10), 0.5, 2, Point(0, 1, 0))
-cilindro.set_cor('T')
+# cone = Cone(Point(0, 0, -10), 2, 5, Point(0, 1, 0))
+# cone.set_cor('A')
+# cilindro = Cillinder(Point(0, -2, -10), 0.5, 2, Point(0, 1, 0))
+# cilindro.set_cor('T')
 
 objects.append(cube1)
 objects.append(cube2)
@@ -77,15 +81,15 @@ objects.append(cube3)
 # FONTES LUMINOSAS =====================================================================================================
 # TODO Definir valores adequados para a iluminação
 fontesLuminosas = []
-light_amb = EnvironmentLight([0, 0, 0])
+light_amb = EnvironmentLight([1, 1, 1])
 light_p1 = PointLight([0, 0, 0], np.array([1, 1, 1]))
 light_sp2 = SpotLight([0, 0, 0], np.array([1, 10, 1]), np.array([1, 1, 1]))
 light_rmt3 = RemoteLight([0, 0, 0], np.array([1, 1, 0]))
 
 fontesLuminosas.append(light_amb)
-fontesLuminosas.append(light_p1)
-fontesLuminosas.append(light_sp2)
-fontesLuminosas.append(light_rmt3)
+# fontesLuminosas.append(light_p1)
+# fontesLuminosas.append(light_sp2)
+# fontesLuminosas.append(light_rmt3)
 
 # MUDANÇA DE COORDENADAS MUNDO->CAM ====================================================================================
 # TODO Implemetar métodos transform_to_camera nos objetos, nas fonte luminosas, na placa e na tela
@@ -106,8 +110,7 @@ for l in range(len(placa.p)):
     for c in range(len(placa.p[l])):
         # print(f"[{l}][{c}]: ", end=" ")
         furo = placa.p[l][c]
-        print(furo)
-        raio = Ray(Point(viewer[0], viewer[1], viewer[2]), furo - viewer)
+        raio = Ray(Point(viewer[0], viewer[1], viewer[2]), furo.coords() - viewer)
         min_t = 999999
         primeiro_obj = None
         for obj in objects:
@@ -122,7 +125,7 @@ for l in range(len(placa.p)):
                     primeiro_obj = obj
             # CASO SEJA NECESSARIO MUDAR ALGUM ATRIBUTO DO OBJETO ATINGIDO, USAR O primeir_obj
             if primeiro_obj:
-                tela.set_cor(l, c, primeiro_obj, min_t, fontesLuminosas)
+                tela.set_cor(l, c, primeiro_obj.material, min_t, fontesLuminosas)
                 tela.set_simbolo_furo(l, c, primeiro_obj.cor)  # Temporario. Serve para impressão no terminal [REMOVER]
 
 # IMPRESSÃO DE TELA ====================================================================================================

@@ -29,16 +29,13 @@ def calc_normal(f1, f2, f3):
 
 class Cube(object):
 
-    def __init__(self, centro_base, aresta, v_direcao, prop_dif, prop_sp):
+    def __init__(self, centro_base, aresta, v_direcao,material):
         self.__lista_vertices = self.calc_verticies(centro_base, aresta)
         self.__lista_arestas = self.calc_arestas()
         self.__lista_faces = self.calc_faces()
         self.v_direcao = v_direcao
         self.cor = ""
-        self.material = None
-        self.m = None
-        self.prop_dif = prop_dif
-        self.prop_sp = prop_sp
+        self.material = material
 
     def intersection_with(self, reta):
         t = []
