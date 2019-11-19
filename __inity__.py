@@ -1,13 +1,93 @@
-from DataStructure.Face import Face
 from DataStructure.Point import Point
-from DataStructure.Vector import Vector
-from Object.Cone import Cone
-from Object.Cube import Cube
-from Object.Cylinder import Cylinder
-from Object.Plane import Plane
-from Object.Sphere import Sphere
+from utils.Material import Material
+from utils.Placa import Panel
 from utils.Ray import Ray
+from utils.Utils import camera_init_
 
+"""
+==================================================================
+UNIVERSIDADE FEDERAL DO CEARÁ
+COMPUTAÇÃO GRÁFICA
+TRABALHO 1 -
+------------------------------------------------------------------
+Autores: 354037 Alysson Macedo
+         000000 
+         000000
+         000000
+         000000
+         000000 
+==================================================================
+"""
+# Posicionamento da Placa furada =================================
+num_furos = 10  # número de furos por linha. Define a resolução da tela
+tamanho = 6  # medida da aresta da placa em unidades de coordenada
+placa = Panel(tamanho, num_furos, num_furos)
+"""O centro do painel tem coordenada [0,0,z]
+    deste modo os vertices tem coord:
+    [-tam/2, tam/2, z]  ______ [tam/2,  tam/2, z]
+                       |  .  |
+    [-tam/2,-tam/2, z] |_____| [tam/2, -tam/2, z]
+"""
+
+# Posicionamento de Câmera =======================================
+viewer = Point(0, 0, 0)  # Coordeanadas do observador
+look_at = Point(0, 0, -10)  # Ponto q define a direção da camera
+view_up = Point(0, 10, -10)  # Ponto que define o plano sagital
+camera = camera_init_(viewer.coord, look_at.coord, view_up.coord)
+
+# Todo: é esperado que com os dados acima camera seja a matriz identidade?
+print(camera)
+
+# CENÁRIO ========================================================
+
+mat_teste = Material()
+objetos = []
+"""
+cubo1 = Cube()
+cubo2 = Cube()
+cubo3 = Cube()
+cone = Cone()
+cilindro = Cylinder()
+esfera = Sphere()
+
+objetos.append(cubo1)
+objetos.append(cubo2)
+objetos.append(cubo3)
+objetos.append(cone)
+objetos.append(cilindro)
+objetos.append(esfera)
+"""
+# FONTES LUMINOSAS ===============================================
+fontes_luminosas = []
+# luz_ambiente =
+# fontes_luminosas.append(luz_ambiente)
+
+# MUDANÇAS DE COORDENADAS MUNDO -> CAM ===========================
+for o in objetos:
+    o.transforme_coord_to_(camera)
+for f in fontes_luminosas:
+    f.transforme_coord_to_(camera)
+
+# COLISÕES =======================================================
+for l in range(len(placa.matrix_pixel)):
+    for c in range(len(placa.matrix_pixel[l])):
+        furo = placa.get_p(l, c)
+        raio = Ray(viewer, furo.coord - viewer)
+        t_min = 9999999
+        primeiro_objeto = None
+        for obj in objetos:
+            t = obj.intersection_with(raio)
+            if t < t_min:
+                t_min = t
+                primeiro_obj = obj
+                placa.set_cor(l, c, obj.material)  # temporario.
+                # placa.set_cor(l, c, calcula_cor(obj, fontes_luminosas))
+
+# EXIBIÇÃO EM TELA ===============================================
+placa.show()
+
+"""
+# ===============
 a = Point(0, 1, 2)
 b = Point(1, 3, 2)
 c = Point(5, 2, 8)
@@ -57,3 +137,4 @@ for i in cubo.lista_faces:
     print(i.label, " - ", i.normal_vector)
 
 print("cubo final", r.get_point(cubo.intersection_with(r)).coord)
+"""

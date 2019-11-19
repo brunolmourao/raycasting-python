@@ -5,10 +5,11 @@ from utils.Ray import Ray
 
 
 class Sphere:
-    def __init__(self, centro: Point, raio: float):
+    def __init__(self, centro: Point, raio: float, material=None, cor=None):
         self.__centro = centro
         self.__raio = raio
-        self.__material = ""
+        self.__material = material
+        self.__cor = cor
 
     def intersection_with(self, reta: Ray):
         a = np.dot(reta.d, reta.d)
@@ -24,6 +25,9 @@ class Sphere:
         else:
             t = None
         return t
+
+    def transforme_coord_to_(self, c):
+        pass
 
     @property
     def centro(self):

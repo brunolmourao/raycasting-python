@@ -44,7 +44,7 @@ def calc_faces(l_v):
 
 
 class Cube:
-    def __init__(self, centro, vetor, aresta, material=None):
+    def __init__(self, centro, vetor, aresta, material=None, cor=None):
         self.__centro = centro
         self.__n = vetor / np.linalg.norm(vetor)
         self.__aresta = aresta
@@ -52,6 +52,7 @@ class Cube:
         self.__lista_arestas = calc_arestas(self.lista_vertices)
         self.__lista_faces = calc_faces(self.lista_vertices)
         self.__material = material
+        self.__cor = cor
 
     def intersection_with(self, reta: Ray):
         t_min = 99999999
@@ -72,6 +73,9 @@ class Cube:
                             if t < t_min:
                                 t_min = t
         return t_min
+
+    def transforme_coord_to_(self, c):
+        pass
 
     @property
     def centro(self):

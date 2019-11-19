@@ -5,15 +5,20 @@ from utils.Ray import Ray
 
 
 class Plane:
-    def __init__(self, p: Point, n):
+    def __init__(self, p: Point, n, material=None, cor=None):
         self.__ppl = p
         self.__n = n / np.linalg.norm(n)
+        self.__material = material
+        self.__cor = cor
 
     def intersection_with(self, r: Ray):
         if np.dot(r.d, self.n):
             return np.dot(self.ppl.coord - r.p.coord, self.n) \
                    / np.dot(r.d, self.n)
         return None
+
+    def transforme_coord_to_(self, c):
+        pass
 
     @property
     def n(self):

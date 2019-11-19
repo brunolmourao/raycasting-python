@@ -4,12 +4,13 @@ from utils.Ray import Ray
 
 
 class Cone:
-    def __init__(self, centro, vetor, raio, altura, material=None):
+    def __init__(self, centro, vetor, raio, altura, material=None, cor=None):
         self.__centro = centro
         self.__raio = raio
         self.__altura = altura
         self.__n = vetor / np.linalg.norm(vetor)
         self.__material = material
+        self.__cor = cor
 
     def intersection_with(self, reta: Ray):
         v = self.n * self.altura - reta.p.coord
@@ -34,6 +35,9 @@ class Cone:
                 return None
         else:
             return None
+
+    def transforme_coord_to_(self, c):
+        pass
 
     @property
     def centro(self):

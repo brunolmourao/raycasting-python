@@ -5,12 +5,13 @@ from utils.Ray import Ray
 
 
 class Cylinder:
-    def __init__(self, centro: Point, vetor, raio, altura, material=None):
+    def __init__(self, centro: Point, vetor, raio, altura, material=None, cor=None):
         self.__centro = centro.coord
         self.__u = vetor / np.linalg.norm(vetor)
         self.__raio = raio
         self.__altura = altura
         self.__material = material
+        self.__cor = cor
 
     def intersection_with(self, reta: Ray):
         w = reta.d - np.dot(reta.d, self.u) * self.u
@@ -26,7 +27,7 @@ class Cylinder:
             t = (-b + np.sqrt(delta)) / a
             t1 = (-b - np.sqrt(delta)) / a
 
-            #  print("delta ", delta)
+            # print("delta ", delta)
             # print("t ", t, reta.get_point(t).coord)
             # print("t1", t1, reta.get_point(t1).coord)
 
@@ -39,6 +40,9 @@ class Cylinder:
                 return t
         else:
             return None
+
+    def transforme_coord_to_(self, c):
+        pass
 
     @property
     def centro(self):
