@@ -25,18 +25,10 @@ class Cone:
         b = np.dot(v, d) * np.power(cos_theta, 2) - np.dot(v, n) * np.dot(d, n)
         c = np.power(np.dot(v, n), 2) - np.dot(v, v) * np.power(cos_theta, 2)
 
-        if a == 0:
-            print("nao era pra ser")
         delta = b ** 2 - a * c
         if delta >= 0:
-            t = -b + np.sqrt(delta) / a
-            t1 = -b - np.sqrt(delta) / a
-
-            if t1 < t:
-                t = t1
-
+            t = (-b + np.sqrt(delta)) / a
             vp = V - reta.get_point(t).coord
-            return t
 
             if 0 <= np.dot(vp, n) <= self.altura:
                 return t
