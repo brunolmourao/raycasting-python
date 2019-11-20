@@ -27,3 +27,11 @@ class Plane:
     @property
     def ppl(self):
         return self.__ppl
+
+    @property
+    def material(self):
+        return self.__material
+
+    @property
+    def cor(self):
+        return self.__cor

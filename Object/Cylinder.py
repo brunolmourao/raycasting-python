@@ -59,3 +59,12 @@ class Cylinder:
     @property
     def altura(self):
         return self.__altura
+
+    @property
+    def material(self):
+        return self.__material
+
+    @property
+    def cor(self):
+        return self.__cor
+

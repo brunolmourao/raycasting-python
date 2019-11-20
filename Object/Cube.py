@@ -44,7 +44,7 @@ def calc_faces(l_v):
 
 
 class Cube:
-    def __init__(self, centro, vetor, aresta, material=None, cor=None):
+    def __init__(self, centro: Point, vetor, aresta, material=None, cor=None):
         self.__centro = centro
         self.__n = vetor / np.linalg.norm(vetor)
         self.__aresta = aresta
@@ -62,9 +62,9 @@ class Cube:
                     / np.dot(reta.d, face.normal_vector)
                 p = reta.get_point(t)
 
-                pv1 = np.cross(face.p2.coord - face.p1.coord, face.p1.coord - p.coord)
-                pv2 = np.cross(face.p3.coord - face.p2.coord, face.p2.coord - p.coord)
-                pv3 = np.cross(face.p1.coord - face.p3.coord, face.p3.coord - p.coord)
+                pv1 = np.cross(face.p2.coord - face.p1.coord, p.coord - face.p1.coord)
+                pv2 = np.cross(face.p3.coord - face.p2.coord, p.coord - face.p2.coord)
+                pv3 = np.cross(face.p1.coord - face.p3.coord, p.coord - face.p3.coord)
                 pv0 = np.cross(face.p2.coord - face.p1.coord, face.p3.coord - face.p1.coord)
 
                 if np.dot(pv1, pv0) > 0:
@@ -104,6 +104,10 @@ class Cube:
     @property
     def material(self):
         return self.__material
+
+    @property
+    def cor(self):
+        return self.__cor
 
     @material.setter
     def material(self, m):

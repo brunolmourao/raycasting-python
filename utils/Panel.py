@@ -1,13 +1,13 @@
 from DataStructure.Point import Point
 from utils.constants import Z_PLACA
-
+import numpy as np
 
 class Panel:
     def __init__(self, tam, n_linhas, n_colunas):
         self.__tam = tam
         self.__num_l = n_linhas
         self.__num_c = n_colunas
-        self.__matrix_pixel = []
+        self.__matrix_pixel = np.full((n_linhas, n_colunas), ".")
 
     def get_p(self, i, j):
         if self.tam / self.n_lin >= self.tam / self.n_col:
@@ -29,7 +29,7 @@ class Panel:
         i = 0
         for l in range(len(self.matrix_pixel)):
             for c in range(len(self.matrix_pixel[l])):
-                print(f"{i} {self.matrix_pixel[l][c]}", end="\n")
+                print(f"{self.matrix_pixel[l][c]}", end=" ")
                 i = i + 1
             print()
 

@@ -41,6 +41,10 @@ class Sphere:
     def material(self):
         return self.__material
 
+    @property
+    def cor(self):
+        return self.__cor
+
     @material.setter
     def material(self, m):
         self.__material = m
