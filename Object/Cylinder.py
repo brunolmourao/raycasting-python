@@ -27,15 +27,9 @@ class Cylinder:
             t = (-b + np.sqrt(delta)) / a
             t1 = (-b - np.sqrt(delta)) / a
 
-            # print("delta ", delta)
-            # print("t ", t, reta.get_point(t).coord)
-            # print("t1", t1, reta.get_point(t1).coord)
-
             if t1 < t:
                 t = t1
             p = reta.get_point(t).coord
-            # print("p", p)
-            # print(np.dot(p - self.centro, self.u))
             if 0 <= np.dot(p - self.centro, self.u) <= self.altura:
                 return t
         else:
@@ -67,4 +61,3 @@ class Cylinder:
     @property
     def cor(self):
         return self.__cor
-

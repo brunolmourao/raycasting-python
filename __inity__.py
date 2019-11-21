@@ -29,7 +29,7 @@ Autores: 354037 Alysson Macedo
 sys.setrecursionlimit(RECURSION_LIMIT)
 
 # Posicionamento da Placa furada =================================
-num_furos = 30  # número de furos por linha. Define a resolução da tela
+num_furos = 100  # número de furos por linha. Define a resolução da tela
 tamanho = 10  # medida da aresta da placa em unidades de coordenada
 placa = Panel(tamanho, num_furos, num_furos)
 """O centro do painel tem coordenada [0,0,z]
@@ -50,22 +50,22 @@ print(camera)
 
 # CENÁRIO ========================================================
 
-mat_teste = Material()
+mat_teste = Material(0, 0, 0)
 objetos = []
 
 cubo1 = Cube(Point(0, -2, -20), Point(0, 1, 0).coord, 6, mat_teste, "1")
 cubo2 = Cube(Point(0, 4, -20), Point(0, 1, 0).coord, 6, mat_teste, "2")
 cubo3 = Cube(Point(0, 10, -20), Point(0, 1, 0).coord, 6, mat_teste, "3")
-cone = Cone(Point(0, -7, 17), Point(0, 1, 0).coord, 3, 8, mat_teste, "A")
-cilindro = Cylinder(Point(6, 0, -6), Point(0, 1, 0).coord, 0.5, 4, mat_teste, "H")
-esfera = Sphere(Point(0, 0, 7), 5, mat_teste, "o")
+cone = Cone(Point(0, 0, -10), Point(0, 1, 0).coord, 2, 6, mat_teste, "_")
+cilindro = Cylinder(Point(0, -2, -10), Point(0, 1, 0).coord, 0.5, 2, mat_teste, "H")
+esfera = Sphere(Point(0, 6.5, -10), 0.5, mat_teste, "o")
 
+objetos.append(cubo1)
+objetos.append(cubo2)
+objetos.append(cubo3)
 objetos.append(cone)
-#objetos.append(cubo1)
-#objetos.append(cubo2)
-#objetos.append(cubo3)
-#objetos.append(cilindro)
-#objetos.append(esfera)
+objetos.append(cilindro)
+objetos.append(esfera)
 
 # FONTES LUMINOSAS ===============================================
 fontes_luminosas = []

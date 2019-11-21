@@ -3,6 +3,7 @@ import numpy as np
 from DataStructure.Edge import Edge
 from DataStructure.Face import Face
 from DataStructure.Point import Point
+from Object.Sphere import Sphere
 from utils.Ray import Ray
 
 
@@ -53,25 +54,27 @@ class Cube:
         self.__lista_faces = calc_faces(self.lista_vertices)
         self.__material = material
         self.__cor = cor
+        self.__cluster = Sphere(Point(centro.x, centro.y + aresta/2, centro.z), aresta * np.sqrt(3) / 2, material, cor)
 
     def intersection_with(self, reta: Ray):
         t_min = 99999999
-        for face in self.lista_faces:
-            if np.dot(reta.d, face.normal_vector) != 0:
-                t = np.dot(face.p1.coord - reta.p.coord, face.normal_vector) \
-                    / np.dot(reta.d, face.normal_vector)
-                p = reta.get_point(t)
+        if self.cluster.intersection_with(reta):
+            for face in self.lista_faces:
+                if np.dot(reta.d, face.normal_vector) != 0:
+                    t = np.dot(face.p1.coord - reta.p.coord, face.normal_vector) \
+                        / np.dot(reta.d, face.normal_vector)
+                    p = reta.get_point(t)
 
-                pv1 = np.cross(face.p2.coord - face.p1.coord, p.coord - face.p1.coord)
-                pv2 = np.cross(face.p3.coord - face.p2.coord, p.coord - face.p2.coord)
-                pv3 = np.cross(face.p1.coord - face.p3.coord, p.coord - face.p3.coord)
-                pv0 = np.cross(face.p2.coord - face.p1.coord, face.p3.coord - face.p1.coord)
+                    pv1 = np.cross(face.p2.coord - face.p1.coord, p.coord - face.p1.coord)
+                    pv2 = np.cross(face.p3.coord - face.p2.coord, p.coord - face.p2.coord)
+                    pv3 = np.cross(face.p1.coord - face.p3.coord, p.coord - face.p3.coord)
+                    pv0 = np.cross(face.p2.coord - face.p1.coord, face.p3.coord - face.p1.coord)
 
-                if np.dot(pv1, pv0) > 0:
-                    if np.dot(pv2, pv0) > 0:
-                        if np.dot(pv3, pv0) > 0:
-                            if t < t_min:
-                                t_min = t
+                    if np.dot(pv1, pv0) > 0:
+                        if np.dot(pv2, pv0) > 0:
+                            if np.dot(pv3, pv0) > 0:
+                                if t < t_min:
+                                    t_min = t
         return t_min
 
     def transforme_coord_to_(self, c):
@@ -108,6 +111,10 @@ class Cube:
     @property
     def cor(self):
         return self.__cor
+
+    @property
+    def cluster(self):
+        return self.__cluster
 
     @material.setter
     def material(self, m):
