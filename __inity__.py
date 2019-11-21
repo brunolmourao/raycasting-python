@@ -47,7 +47,7 @@ view_up = Point(0, 10, -10)  # Ponto que define o plano sagital
 camera = camera_init_(viewer.coord, look_at.coord, view_up.coord)
 
 # CENÁRIO ========================================================
-mat_teste = Material(0, 0, 0)
+mat_teste = Material(0, 0, 0) #TODO definir parametros corretos do material
 objetos = []
 
 cubo1 = Cube(Point(0, -2, -20), Point(0, 1, 0).coord, 6, mat_teste, "1")
