@@ -27,7 +27,11 @@ class Sphere:
         return t
 
     def transforme_coord_to_(self, c):
-        pass
+        centro_2D = np.append(self.centro.coord, 0)[:, np.newaxis]
+        new_centro_2D = np.dot(c, centro_2D)
+        new_centro_1D = new_centro_2D.transpose().squeeze()
+        new_centro = np.delete(new_centro_1D, 3, 0)
+        self.__centro = Point(new_centro[0], new_centro[1], new_centro[2])
 
     @property
     def centro(self):

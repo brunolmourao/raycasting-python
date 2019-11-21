@@ -5,6 +5,7 @@ from Object.Cone import Cone
 from Object.Cube import Cube
 from Object.Cylinder import Cylinder
 from Object.Sphere import Sphere
+from light.Lighting import *
 from utils.Material import Material
 from utils.Panel import Panel
 from utils.Ray import Ray
@@ -45,11 +46,7 @@ look_at = Point(0, 0, -10)  # Ponto q define a direção da camera
 view_up = Point(0, 10, -10)  # Ponto que define o plano sagital
 camera = camera_init_(viewer.coord, look_at.coord, view_up.coord)
 
-# Todo: é esperado que com os dados acima camera seja a matriz identidade?
-print(camera)
-
 # CENÁRIO ========================================================
-
 mat_teste = Material(0, 0, 0)
 objetos = []
 
@@ -69,9 +66,17 @@ objetos.append(esfera)
 
 # FONTES LUMINOSAS ===============================================
 fontes_luminosas = []
-# luz_ambiente =
-# fontes_luminosas.append(luz_ambiente)
+"""
+luz_ambiente = EnvironmentLight()
+luz_pontual = PointLight()
+luz_spot = SpotLight()
+luz_remota = RemoteLight()
 
+fontes_luminosas.append(luz_ambiente)
+fontes_luminosas.append(luz_pontual)
+fontes_luminosas.append(luz_spot)
+fontes_luminosas.append(luz_remota)
+"""
 # MUDANÇAS DE COORDENADAS MUNDO -> CAM ===========================
 for o in objetos:
     o.transforme_coord_to_(camera)

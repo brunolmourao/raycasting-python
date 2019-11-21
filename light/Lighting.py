@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class Light:
     # Inicia a Luz com um Atributo rgb que é um array com os valores RGB, entre 0 e 1
     def __init__(self, rgb):

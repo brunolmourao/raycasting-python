@@ -6,7 +6,7 @@ from utils.Ray import Ray
 
 class Cylinder:
     def __init__(self, centro: Point, vetor, raio, altura, material=None, cor=None):
-        self.__centro = centro.coord
+        self.__centro = centro
         self.__u = vetor / np.linalg.norm(vetor)
         self.__raio = raio
         self.__altura = altura
@@ -15,7 +15,7 @@ class Cylinder:
 
     def intersection_with(self, reta: Ray):
         w = reta.d - np.dot(reta.d, self.u) * self.u
-        v = (reta.p.coord - self.centro) - (np.dot(reta.p.coord - self.centro, self.u)) * self.u
+        v = (reta.p.coord - self.centro.coord) - (np.dot(reta.p.coord - self.centro.coord, self.u)) * self.u
         a = np.dot(w, w)
         b = np.dot(v, w)
         c = np.dot(v, v) - self.raio ** 2
@@ -30,13 +30,23 @@ class Cylinder:
             if t1 < t:
                 t = t1
             p = reta.get_point(t).coord
-            if 0 <= np.dot(p - self.centro, self.u) <= self.altura:
+            if 0 <= np.dot(p - self.centro.coord, self.u) <= self.altura:
                 return t
         else:
             return None
 
     def transforme_coord_to_(self, c):
-        pass
+        centro_2D = np.append(self.centro.coord, 0)[:, np.newaxis]
+        new_centro_2D = np.dot(c, centro_2D)
+        new_centro_1D = new_centro_2D.transpose().squeeze()
+        new_centro = np.delete(new_centro_1D, 3, 0)
+        self.__centro = Point(new_centro[0], new_centro[1], new_centro[2])
+
+        u_2D = np.append(self.u, 1)[:, np.newaxis]
+        new_u_2D = np.dot(c, u_2D)
+        new_u_1D = new_u_2D.transpose().squeeze()
+        new_u = np.delete(new_u_1D, 3, 0)
+        self.__u = new_u
 
     @property
     def centro(self):

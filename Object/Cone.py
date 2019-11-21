@@ -38,7 +38,30 @@ class Cone:
             return None
 
     def transforme_coord_to_(self, c):
-        pass
+        # print("teste ====================")
+        # print("antes: ", self.centro.coord, self.centro.coord.shape)
+
+        centro_2D = np.append(self.centro.coord, 0)[:, np.newaxis]
+        new_centro_2D = np.dot(c, centro_2D)
+        new_centro_1D = new_centro_2D.transpose().squeeze()
+        new_centro = np.delete(new_centro_1D, 3, 0)
+        self.__centro = Point(new_centro[0], new_centro[1], new_centro[2])
+
+        n_2D = np.append(self.n, 1)[:, np.newaxis]
+        new_n_2D = np.dot(c, n_2D)
+        new_n_1D = new_n_2D.transpose().squeeze()
+        new_n = np.delete(new_n_1D, 3, 0)
+        self.__n = new_n
+
+        # print(f"{centro_2D} {np.shape(centro_2D)}")
+        # print(f"{new_centro_2D} {new_centro_2D.shape}")
+        # print(f"{new_centro_1D} {np.shape(new_centro_1D)}")
+        # print(f"{new_centro} {np.shape(new_centro)}")
+        # print("n")
+        # print(f"{n_2D} {np.shape(n_2D)}")
+        # print(f"{new_n_2D} {new_n_2D.shape}")
+        # print(f"{new_n_1D} {np.shape(new_n_1D)}")
+        # print(f"{new_n} {np.shape(new_n)}")
 
     @property
     def centro(self):
