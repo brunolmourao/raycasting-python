@@ -27,12 +27,12 @@ class EnvironmentLight(Light):
 
 class PointLight(Light):
     # Onde ppnt é o Ponto de onde a luz pontual é gerada
-    def __init__(self, rgb, ppont):
+    def __init__(self, rgb, ppont: Point):
         super().__init__(rgb)
         self.__ppont = ppont
 
-    def iluminar_dif(self, prop_obj, n, pint):
-        l = self.__ppont - pint / np.linalg.norm(self.__ppont - pint)
+    def iluminar_dif(self, prop_obj, n, pint: Point):
+        l = self.__ppont.coord - pint.coord / np.linalg.norm(self.__ppont.coord - pint.coord)
         fd = np.dot(n, l)
         if fd < 0:
             fd = 0
@@ -41,9 +41,9 @@ class PointLight(Light):
             product[x] = product[x] * fd
         return product
 
-    def iluminar_sp(self, prop_obj, n, p0, pint, m):
-        l = self.__ppont - pint / np.linalg.norm(self.__ppont - pint)
-        v = p0 - pint / np.linalg.norm(p0 - pint)
+    def iluminar_sp(self, prop_obj, n, p0: Point, pint: Point, m):
+        l = self.__ppont.coord - pint.coord / np.linalg.norm(self.__ppont.coord - pint.coord)
+        v = p0.coord - pint.coord / np.linalg.norm(p0.coord - pint.coord)
         r = 2 * np.dot(l, n) * n - l
         fs = np.power(np.dot(r, v), m)
         if fs < 0:
@@ -62,10 +62,11 @@ class PointLight(Light):
 
 
 class SpotLight(Light):
-    def __init__(self, rgb, pspot, pilu):
+    #TODO Esse pilu deveria ser um vetor. Correto?
+    def __init__(self, rgb, pspot: Point, pilu: Point):
         super().__init__(rgb)
         self.__p = pspot
-        self.__dr = pilu - p
+        self.__dr = pilu.coord - pspot.coord
 
     def iluminar_dif(self, prop_obj, n):
         l = self.__dr
@@ -77,9 +78,9 @@ class SpotLight(Light):
             product[x] = product[x] * fd
         return product
 
-    def iluminar_sp(self, prop_obj, n, p0, pint, m):
+    def iluminar_sp(self, prop_obj, n, p0: Point, pint: Point, m):
         l = self.__dr
-        v = p0 - pint / np.linalg.norm(p0 - pint)
+        v = p0.coord - pint.coord / np.linalg.norm(p0.coord - pint.coord)
         r = 2 * np.dot(l, n) * n - l
         fs = np.power(np.dot(r, v), m)
         if fs < 0:
@@ -96,7 +97,7 @@ class SpotLight(Light):
         new_p = np.delete(new_p_1D, 3, 0)
         self.__p = Point(new_p[0], new_p[1], new_p[2])
 
-        dr_2D = np.append(self.__dr.coord, 1)[:, np.newaxis]
+        dr_2D = np.append(self.__dr, 1)[:, np.newaxis] #TODO tem um erro aqui, 'self.__dr' está sendo visto como um Point, quando deveria ser um vetor (np.array)
         new_dr_2D = np.dot(c, dr_2D)
         new_dr_1D = new_dr_2D.transpose().squeeze()
         new_dr = np.delete(new_dr_1D, 3, 0)
@@ -118,9 +119,9 @@ class RemoteLight(Light):
             product[x] = product[x] * fd
         return product
 
-    def iluminar_sp(self, prop_obj, n, p0, pint, m):
+    def iluminar_sp(self, prop_obj, n, p0: Point, pint: Point, m):
         l = self.__dr
-        v = p0 - pint / np.linalg.norm(p0 - pint)
+        v = p0.coord - pint.coord / np.linalg.norm(p0.coord - pint.coord)
         r = 2 * np.dot(l, n) * n - l
         fs = np.power(np.dot(r, v), m)
         if fs < 0:
